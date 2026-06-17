@@ -56,6 +56,10 @@
     <Compile Include="RdelCommandRunner.cs" />
     <Compile Include="RdelProcess.cs" />
     <Compile Include="RdelHistoryWriter.cs" />
+    <Compile Include="DryRunZipUpdateCommand.cs" />
+    <Compile Include="RollbackLastRunCommand.cs" />
+    <Compile Include="RdelDryRunService.cs" />
+    <Compile Include="RdelRollbackService.cs" />
     <Compile Include="Contollo.Rdel.ZipRunnerPackage.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -92,3 +96,6 @@
   </Target>
   -->
 </Project>
+
+
+

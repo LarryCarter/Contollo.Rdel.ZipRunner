@@ -11,17 +11,34 @@
     <Buttons>
       <Button guid="guidContolloRdelZipRunnerCommandSet" id="ApplyZipUpdateCommandId" priority="0x0100" type="Button">
         <Parent guid="guidContolloRdelZipRunnerCommandSet" id="ContolloRdelToolsGroup" />
-        <Strings>
-          <ButtonText>Contollo RDEL: Apply Zip Update</ButtonText>
-        </Strings>
+        <Icon guid="guidImages" id="bmpPic1" />
+        <Strings><ButtonText>Contollo RDEL: Apply Zip Update</ButtonText></Strings>
+      </Button>
+      <Button guid="guidContolloRdelZipRunnerCommandSet" id="DryRunZipUpdateCommandId" priority="0x0110" type="Button">
+        <Parent guid="guidContolloRdelZipRunnerCommandSet" id="ContolloRdelToolsGroup" />
+        <Icon guid="guidImages" id="bmpPic1" />
+        <Strings><ButtonText>Contollo RDEL: Dry Run Zip Update</ButtonText></Strings>
+      </Button>
+      <Button guid="guidContolloRdelZipRunnerCommandSet" id="RollbackLastRunCommandId" priority="0x0120" type="Button">
+        <Parent guid="guidContolloRdelZipRunnerCommandSet" id="ContolloRdelToolsGroup" />
+        <Icon guid="guidImages" id="bmpPic1" />
+        <Strings><ButtonText>Contollo RDEL: Rollback Last Run</ButtonText></Strings>
       </Button>
     </Buttons>
+    <Bitmaps>
+      <Bitmap guid="guidImages" href="Resources\Images.png" usedList="bmpPic1"/>
+    </Bitmaps>
   </Commands>
   <Symbols>
     <GuidSymbol name="guidContolloRdelZipRunnerPackage" value="{a1361a6f-005b-4060-a6ef-3389916ce837}" />
     <GuidSymbol name="guidContolloRdelZipRunnerCommandSet" value="{50fbcc4e-c89d-48ef-aa3a-3c1f8f3f9d4d}">
       <IDSymbol name="ContolloRdelToolsGroup" value="0x1020" />
       <IDSymbol name="ApplyZipUpdateCommandId" value="0x0100" />
+      <IDSymbol name="DryRunZipUpdateCommandId" value="0x0101" />
+      <IDSymbol name="RollbackLastRunCommandId" value="0x0102" />
+    </GuidSymbol>
+    <GuidSymbol name="guidImages" value="{2b860d9d-378c-4817-96ec-4a1c3d8cecd1}">
+      <IDSymbol name="bmpPic1" value="1" />
     </GuidSymbol>
   </Symbols>
 </CommandTable>

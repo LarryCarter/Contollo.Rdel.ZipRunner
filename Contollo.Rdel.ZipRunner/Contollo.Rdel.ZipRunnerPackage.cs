@@ -17,6 +17,8 @@ namespace Contollo.Rdel.ZipRunner
         {
             await JoinableTaskFactory.SwitchToMainThreadAsync(cancellationToken);
             await ApplyZipUpdateCommand.InitializeAsync(this);
+            await DryRunZipUpdateCommand.InitializeAsync(this);
+            await RollbackLastRunCommand.InitializeAsync(this);
         }
     }
 }
