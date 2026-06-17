@@ -1,1 +1,2 @@
 # Contollo.Rdel.ZipRunner
+Contollo RDEL Zip Runner is a Visual Studio 2022 extension that applies AI-generated repository update packages through a controlled Repository Delta Evolution Loop. It lets the developer select a zip package, detects the active solution or selected project, creates a Git checkpoint before changes, safely extracts and applies the update, runs configured restore/build/test commands, captures output, and stores a full history of each applied delta for traceability and rollback.
