@@ -24,11 +24,11 @@ namespace Contollo.Rdel.ZipRunner
     /// </para>
     /// </remarks>
     [PackageRegistration(UseManagedResourcesOnly = true, AllowsBackgroundLoading = true)]
-    [Guid(Contollo.Rdel.ZipRunnerPackage.PackageGuidString)]
-    public sealed class Contollo.Rdel.ZipRunnerPackage : AsyncPackage
+    [Guid(ContoloRdelZipRunnerPackage.PackageGuidString)]
+    public sealed class ContoloRdelZipRunnerPackage : AsyncPackage
     {
-         /// <summary>
-        /// Contollo.Rdel.ZipRunnerPackage GUID string.
+        /// <summary>
+        /// ContoloRdelZipRunnerPackage GUID string.
         /// </summary>
         public const string PackageGuidString = "a1361a6f-005b-4060-a6ef-3389916ce837";
 
