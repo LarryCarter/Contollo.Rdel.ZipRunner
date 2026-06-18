@@ -1,4 +1,33 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+param(
+    [string]$RepoRoot = "C:\Users\larry\source\repos\Contollo.Rdel.ZipRunner"
+)
+
+$ErrorActionPreference = "Stop"
+
+function Write-TextFile {
+    param(
+        [string]$Path,
+        [string]$Content
+    )
+
+    $directory = Split-Path -Parent $Path
+    if ($directory -and !(Test-Path $directory)) {
+        New-Item -ItemType Directory -Path $directory | Out-Null
+    }
+
+    [System.IO.File]::WriteAllText($Path, $Content, [System.Text.Encoding]::UTF8)
+}
+
+$ProjectDir = Join-Path $RepoRoot "Contollo.Rdel.ZipRunner"
+$ProjectFile = Join-Path $ProjectDir "Contollo.Rdel.ZipRunner.csproj"
+$VsctFile = Join-Path $ProjectDir "Contollo.Rdel.ZipRunner.vsct"
+
+if (!(Test-Path $ProjectFile)) {
+    throw "Could not find project file: $ProjectFile"
+}
+
+$VsctContent = @'
+<?xml version="1.0" encoding="utf-8"?>
 <CommandTable xmlns="http://schemas.microsoft.com/VisualStudio/2005-10-18/CommandTable" xmlns:xs="http://www.w3.org/2001/XMLSchema">
   <Extern href="stdidcmd.h"/>
   <Extern href="vsshlids.h"/>
@@ -68,3 +97,40 @@
     </GuidSymbol>
   </Symbols>
 </CommandTable>
+'@
+
+Write-TextFile $VsctFile $VsctContent
+
+$content = Get-Content $ProjectFile -Raw
+
+if (!$content.Contains('<VSCTCompile Include="Contollo.Rdel.ZipRunner.vsct">')) {
+    $vsctItemGroup = @'
+
+  <ItemGroup>
+    <VSCTCompile Include="Contollo.Rdel.ZipRunner.vsct">
+      <ResourceName>Menus.ctmenu</ResourceName>
+    </VSCTCompile>
+  </ItemGroup>
+'@
+
+    $content = $content -replace '\s*</Project>\s*$', ($vsctItemGroup + "`r`n</Project>")
+    Set-Content -Path $ProjectFile -Value $content -Encoding UTF8
+}
+
+Remove-Item -Recurse -Force (Join-Path $ProjectDir "bin") -ErrorAction SilentlyContinue
+Remove-Item -Recurse -Force (Join-Path $ProjectDir "obj") -ErrorAction SilentlyContinue
+
+Write-Host "RDEL 0008 applied."
+Write-Host ""
+Write-Host "Tools menu will now be:"
+Write-Host "  Contollo RDEL"
+Write-Host "    Apply Patch"
+Write-Host "    Test Run"
+Write-Host "    Rollback Last Patch"
+Write-Host ""
+Write-Host "Next:"
+Write-Host "  1. Close all Experimental Visual Studio windows."
+Write-Host "  2. Clean Solution."
+Write-Host "  3. Rebuild Solution."
+Write-Host "  4. Press F5."
+Write-Host "  5. Check Tools -> Contollo RDEL."
