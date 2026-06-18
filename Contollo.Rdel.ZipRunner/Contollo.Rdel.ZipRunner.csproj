@@ -95,7 +95,9 @@
   <Target Name="AfterBuild">
   </Target>
   -->
+  <ItemGroup>
+    <VSCTCompile Include="Contollo.Rdel.ZipRunner.vsct">
+      <ResourceName>Menus.ctmenu</ResourceName>
+    </VSCTCompile>
+  </ItemGroup>
 </Project>
-
-
-
