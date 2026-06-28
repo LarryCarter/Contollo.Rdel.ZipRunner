@@ -6,91 +6,89 @@ Draft v1.2-preview.
 
 ## Purpose
 
+This document defines how AI systems should understand, generate, review, and consume RDEL packages.
+
 RDEL is a protocol for portable, verified, AI-assisted software change.
 
-It is designed to reduce context loss, hallucinated code, unverifiable changes, hidden assumptions, rogue edits, and environment drift.
+## Audience
 
-## Required Concepts
+This document is for ChatGPT, Claude, Gemini, Copilot, local LLMs, future Neuro Commander Studio agents, and human developers reviewing AI packages.
 
-An RDEL package should carry files, intent, context, validation, trust, compatibility, history, rollback information, and AI instructions.
+## Core Rule
 
-## AI Grounding Protocol
+AI must account for code, not merely suggest code.
 
-AI output must be grounded in repository reality.
+## Required Reading Order for AI
 
-Rules:
+An AI working on this repository should read:
 
-1. Every file change must have a path.
-2. Every file change must have a status.
-3. Every referenced symbol must exist or be created.
-4. Every assumption must be declared.
-5. Every dependency must be explicit.
-6. Every output must be reproducible.
-7. Every architecture-impacting change must update context.
+1. `docs/context.md`
+2. `docs/RDEL-AI-OPERATOR-GUIDE.md`
+3. `docs/RDEL-PACKAGE-AUTHORING-GUIDE.md`
+4. `docs/ai-instructions.md`
+5. `docs/DECISIONS.md`
 
-## Human vs AI Documents
+## Package Layout
 
-- README.md — human-facing explanation.
-- context.md — AI-facing project/task context.
-- memory.md — durable project knowledge.
-- DECISIONS.md — architecture decision history.
-- ai-instructions.md — AI operating rules.
-
-## Manifest Direction
-
-Current manifest fields include Name, Description, Target, and Commands.
-
-Forward-compatible fields include SchemaVersion, ManifestVersion, PackageVersion, PackageType, ChangeIntent, TrustLevel, SourceProvider, ValidationProfile, HumanReadmePath, and AiContextPath.
-
-## Validation Profiles
-
-- DotNetCli — default for normal .NET projects.
-- GitOnly — docs/context/package smoke tests.
-- VisualStudioMsBuild — VSIX and Visual Studio SDK projects.
-- Custom — package-defined command validation.
-
-## SourcePack Compatibility
-
-RDEL should preserve SourcePack principles: deterministic state, checksums, status tracking, dependency chains, no-op protection, forced reset, ignore rules, deployment records, and future signatures.
-
-## Package Lifecycle
-
-Expected lifecycle:
+Current-format RDEL package:
 
 ```text
-Create
-Package
-Hash
-Inspect
-Verify
-Approve
-Apply
-Validate
-Commit
-Archive
-Rollback if needed
+package-name/
+  contollo-rdel.json
+  README.md
+  docs/context.md
+  target files...
 ```
 
-## Future MetadataExport
-
-Current runner skips root package metadata.
-
-Future RDEL should support:
+## Required Manifest Fields
 
 ```json
 {
-  "MetadataExport": {
-    "PublishContext": true,
-    "ContextTargetPath": "context.md",
-    "PublishReadme": false
-  }
+  "Name": "Package Name",
+  "Description": "Package description",
+  "Target": "solution",
+  "Commands": [
+    "git status --porcelain"
+  ]
 }
 ```
 
-## AI Access URLs
+## Current Runner Warning
 
-Future manifest fields may include AiContextUrl and AiSpecUrl pointing to GitHub Pages URLs.
+The current runner still executes `Commands`.
 
-## Non-Goals for Current Runner
+`ValidationProfile` is currently a documented forward-compatible field.
+
+Therefore, commands must be correct even if `ValidationProfile` is present.
+
+## Metadata Skip Rule
+
+Current runner skips root package metadata:
+
+- `contollo-rdel.json`
+- `README.md`
+- `context.md`
+- `manifest.json`
+
+To update repository context today, use:
+
+```text
+docs/context.md
+```
+
+## AI Grounding Protocol
+
+Every AI-generated package must satisfy:
+
+1. Every changed file has an exact path.
+2. Every changed file has a status.
+3. Every referenced symbol exists or is created.
+4. Every assumption is declared.
+5. Every dependency is explicit.
+6. Every validation method matches the project type.
+7. Every architecture-impacting change updates context.
+8. Every package can be reproduced from its contents.
+
+## Non-Goals in Current Runner
 
 Current runner does not yet support delete operations, patch/hunk approval, package signatures, dependency enforcement, metadata export, diff previews, or enterprise policy.
