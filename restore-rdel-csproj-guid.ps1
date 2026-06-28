@@ -1,3 +1,20 @@
+$ProjectFile = "C:\Users\larry\source\repos\Contollo.Rdel.ZipRunner\Contollo.Rdel.ZipRunner\Contollo.Rdel.ZipRunner.csproj"
+$WrongRootProjectFile = "C:\Users\larry\source\repos\Contollo.Rdel.ZipRunner\Contollo.Rdel.ZipRunner.csproj"
+$BackupFile = "$ProjectFile.broken-guid-" + (Get-Date -Format "yyyyMMdd-HHmmss")
+
+if (Test-Path $ProjectFile) {
+    Copy-Item $ProjectFile $BackupFile -Force
+    Write-Host "Backed up current project file to: $BackupFile"
+}
+
+if (Test-Path $WrongRootProjectFile) {
+    $RootBackup = "$WrongRootProjectFile.extra-" + (Get-Date -Format "yyyyMMdd-HHmmss")
+    Copy-Item $WrongRootProjectFile $RootBackup -Force
+    Remove-Item $WrongRootProjectFile -Force
+    Write-Host "Removed accidental root-level project file. Backup: $RootBackup"
+}
+
+$FixedContent = @'
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
@@ -96,3 +113,14 @@
     </VSCTCompile>
   </ItemGroup>
 </Project>
+
+'@
+
+Set-Content -Path $ProjectFile -Value $FixedContent -Encoding UTF8
+
+Write-Host ""
+Write-Host "Fixed project subtype GUID."
+Write-Host "Correct C# project GUID is:"
+Write-Host "{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}"
+Write-Host ""
+Write-Host "Now close Visual Studio completely and reopen the .sln."

@@ -1,0 +1,1 @@
+Run restore-rdel-csproj-guid.ps1 from PowerShell. It fixes the C# project type GUID typo 00F04F -> 00C04F and removes the accidental root-level csproj if present.
