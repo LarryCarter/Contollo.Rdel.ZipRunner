@@ -33,10 +33,19 @@ namespace Contollo.Rdel.ZipRunner
                 {
                     pane.WriteLine("Git has pending changes. Creating pre-run checkpoint commit.");
                     RunGit(repositoryRoot, "add -A");
-                    var commit = RunGit(repositoryRoot, "commit -m \"" + Escape(commitMessage) + "\"");
-                    checkpoint.Output = commit.Output;
-                    checkpoint.CommitCreated = commit.ExitCode == 0;
-                    pane.WriteLine(commit.Output);
+                    string tempMessagePath = WriteCommitMessageFile(commitMessage, null);
+
+                    try
+                    {
+                        var commit = RunGit(repositoryRoot, "commit -F \"" + tempMessagePath + "\"");
+                        checkpoint.Output = commit.Output;
+                        checkpoint.CommitCreated = commit.ExitCode == 0;
+                        pane.WriteLine(commit.Output);
+                    }
+                    finally
+                    {
+                        TryDelete(tempMessagePath);
+                    }
                 }
                 else
                 {
@@ -98,20 +107,19 @@ namespace Contollo.Rdel.ZipRunner
                     return checkpoint;
                 }
 
-                string tempBodyPath = Path.Combine(Path.GetTempPath(), "contollo-rdel-commit-" + Guid.NewGuid().ToString("N") + ".txt");
-                File.WriteAllText(tempBodyPath, body, Encoding.UTF8);
+                string tempMessagePath = WriteCommitMessageFile(subject, body);
 
                 try
                 {
                     pane.WriteLine("Creating post-apply RDEL commit.");
-                    var commit = RunGit(repositoryRoot, "commit -m \"" + Escape(subject) + "\" -F \"" + tempBodyPath + "\"");
+                    var commit = RunGit(repositoryRoot, "commit -F \"" + tempMessagePath + "\"");
                     checkpoint.Output = commit.Output;
                     checkpoint.CommitCreated = commit.ExitCode == 0;
                     pane.WriteLine(commit.Output);
                 }
                 finally
                 {
-                    try { File.Delete(tempBodyPath); } catch { }
+                    TryDelete(tempMessagePath);
                 }
 
                 checkpoint.HeadAfter = RunGit(repositoryRoot, "rev-parse HEAD").Output.Trim();
@@ -200,11 +208,22 @@ namespace Contollo.Rdel.ZipRunner
             builder.AppendLine("RDEL run:");
             builder.AppendLine("- RunId: " + record.RunId);
             builder.AppendLine("- Package: " + record.PackageName);
+            builder.AppendLine("- PackageSha256: " + record.PackageSha256);
             builder.AppendLine("- ApplySucceeded: " + record.ApplySucceeded);
             builder.AppendLine("- ValidationSucceeded: " + record.ValidationSucceeded);
             builder.AppendLine("- Succeeded: " + record.Succeeded);
-            builder.AppendLine();
 
+            if (record.Verification != null && record.Verification.Notes != null && record.Verification.Notes.Count > 0)
+            {
+                builder.AppendLine();
+                builder.AppendLine("Verification:");
+                foreach (string note in record.Verification.Notes)
+                {
+                    builder.AppendLine("- " + note);
+                }
+            }
+
+            builder.AppendLine();
             builder.AppendLine("Applied files:");
             if (record.AppliedFiles != null && record.AppliedFiles.Count > 0)
             {
@@ -235,14 +254,35 @@ namespace Contollo.Rdel.ZipRunner
             return builder.ToString();
         }
 
-        private static string Escape(string value)
+        private static string WriteCommitMessageFile(string subject, string body)
         {
-            if (value == null)
+            string tempBodyPath = Path.Combine(Path.GetTempPath(), "contollo-rdel-commit-" + Guid.NewGuid().ToString("N") + ".txt");
+
+            var builder = new StringBuilder();
+            builder.AppendLine(string.IsNullOrWhiteSpace(subject) ? "RDEL commit" : subject.Trim());
+
+            if (!string.IsNullOrWhiteSpace(body))
             {
-                return string.Empty;
+                builder.AppendLine();
+                builder.AppendLine(body.Trim());
             }
 
-            return value.Replace("\"", "\\\"");
+            File.WriteAllText(tempBodyPath, builder.ToString(), Encoding.UTF8);
+            return tempBodyPath;
+        }
+
+        private static void TryDelete(string path)
+        {
+            try
+            {
+                if (!string.IsNullOrWhiteSpace(path) && File.Exists(path))
+                {
+                    File.Delete(path);
+                }
+            }
+            catch
+            {
+            }
         }
 
         private static RdelCommandResult RunGit(string workingDirectory, string arguments)
