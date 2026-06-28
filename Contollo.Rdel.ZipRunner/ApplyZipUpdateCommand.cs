@@ -1,8 +1,6 @@
 ﻿using System;
 using System.ComponentModel.Design;
 using System.IO;
-using System.Security.Cryptography;
-using System.Text;
 using System.Threading.Tasks;
 using EnvDTE80;
 using Microsoft.VisualStudio.Shell;
@@ -75,18 +73,22 @@ namespace Contollo.Rdel.ZipRunner
                 RunId = runId,
                 PackageName = packageName,
                 ZipPath = zipPath,
-                PackageSha256 = ComputeSha256(zipPath),
+                PackageSha256 = RdelHash.ComputeFileSha256(zipPath),
                 SolutionRoot = solutionRoot,
                 SelectedProjectRoot = selectedProjectRoot,
                 RunRoot = runRoot,
                 StartedUtc = DateTime.UtcNow
             };
 
+            if (!string.IsNullOrWhiteSpace(record.PackageSha256))
+            {
+                pane.WriteLine("Package SHA-256: " + record.PackageSha256);
+            }
+
             var git = new RdelGitCheckpointService();
 
             try
             {
-                pane.WriteLine("Package SHA256: " + record.PackageSha256);
                 record.Git = git.CreateCheckpoint(solutionRoot, "RDEL checkpoint: before " + packageName, pane);
 
                 var zipService = new RdelZipPackageService();
@@ -110,8 +112,18 @@ namespace Contollo.Rdel.ZipRunner
                     record.Commands.Add(result);
                 }
 
-                record.Verification = BuildVerificationSummary(record);
-                record.ValidationSucceeded = record.Verification.CommandsSucceeded;
+                var verifier = new RdelVerifier();
+                record.Verification = verifier.Verify(record.Manifest, record.Commands, record.AppliedFiles);
+                record.ValidationSucceeded = verifier.IsSuccessful(record.Verification);
+
+                if (record.Verification != null && record.Verification.Notes != null)
+                {
+                    pane.WriteLine("RDEL verification summary:");
+                    foreach (string note in record.Verification.Notes)
+                    {
+                        pane.WriteLine("  - " + note);
+                    }
+                }
 
                 record.Succeeded = record.ApplySucceeded && record.ValidationSucceeded;
                 record.CompletedUtc = DateTime.UtcNow;
@@ -150,58 +162,6 @@ namespace Contollo.Rdel.ZipRunner
             }
         }
 
-        private static RdelVerificationSummary BuildVerificationSummary(RdelRunRecord record)
-        {
-            var summary = new RdelVerificationSummary
-            {
-                CommandsSucceeded = true,
-                ExpectedBuildPassed = true,
-                ExpectedMinimumTestsSatisfied = true,
-                ForbiddenChangedPathsClean = true
-            };
-
-            foreach (var command in record.Commands)
-            {
-                if (command.ExitCode != 0)
-                {
-                    summary.CommandsSucceeded = false;
-                    summary.Notes.Add("Command failed: " + command.Command);
-                }
-            }
-
-            if (record.Manifest != null && record.Manifest.ExpectedAfterApply != null)
-            {
-                var expected = record.Manifest.ExpectedAfterApply;
-                if (expected.BuildMustPass && !summary.CommandsSucceeded)
-                {
-                    summary.ExpectedBuildPassed = false;
-                    summary.Notes.Add("Expected build/validation commands to pass, but one or more commands failed.");
-                }
-
-                if (expected.ForbiddenChangedPaths != null && record.AppliedFiles != null)
-                {
-                    foreach (string forbidden in expected.ForbiddenChangedPaths)
-                    {
-                        foreach (string appliedFile in record.AppliedFiles)
-                        {
-                            if (appliedFile.IndexOf(forbidden, StringComparison.OrdinalIgnoreCase) >= 0)
-                            {
-                                summary.ForbiddenChangedPathsClean = false;
-                                summary.Notes.Add("Forbidden changed path matched: " + appliedFile);
-                            }
-                        }
-                    }
-                }
-            }
-
-            if (summary.Notes.Count == 0)
-            {
-                summary.Notes.Add("All configured command-based checks passed.");
-            }
-
-            return summary;
-        }
-
         private static string PickZipFile()
         {
             string downloads = Path.Combine(
@@ -233,21 +193,6 @@ namespace Contollo.Rdel.ZipRunner
                 OLEMSGICON.OLEMSGICON_INFO,
                 OLEMSGBUTTON.OLEMSGBUTTON_OK,
                 OLEMSGDEFBUTTON.OLEMSGDEFBUTTON_FIRST);
-        }
-
-        private static string ComputeSha256(string filePath)
-        {
-            using (var sha = SHA256.Create())
-            using (var stream = File.OpenRead(filePath))
-            {
-                byte[] hash = sha.ComputeHash(stream);
-                var builder = new StringBuilder(hash.Length * 2);
-                foreach (byte b in hash)
-                {
-                    builder.Append(b.ToString("x2"));
-                }
-                return builder.ToString();
-            }
         }
     }
 }
