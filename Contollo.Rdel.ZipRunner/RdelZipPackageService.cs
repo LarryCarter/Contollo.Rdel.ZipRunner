@@ -22,11 +22,13 @@ namespace Contollo.Rdel.ZipRunner
             SafeExtract(zipPath, extractRoot, pane);
             string payloadRoot = DetectPayloadRoot(extractRoot);
             result.Manifest = ReadManifest(payloadRoot);
+            result.PackageMetadata = ReadPackageMetadata(payloadRoot, result.Manifest);
             result.TargetRoot = ResolveTargetRoot(solutionRoot, selectedProjectRoot, result.Manifest);
             result.BackupRoot = backupRoot;
             pane.WriteLine("Package extracted to: " + extractRoot);
             pane.WriteLine("Payload root: " + payloadRoot);
             pane.WriteLine("Target root: " + result.TargetRoot);
+            WritePackageAwareness(result.PackageMetadata, pane);
             ApplyFiles(payloadRoot, result.TargetRoot, backupRoot, result.AppliedFiles, pane);
             return result;
         }
@@ -40,6 +42,7 @@ namespace Contollo.Rdel.ZipRunner
                     string destinationPath = Path.GetFullPath(Path.Combine(extractRoot, entry.FullName));
                     string extractRootFull = Path.GetFullPath(extractRoot);
                     if (!destinationPath.StartsWith(extractRootFull, StringComparison.OrdinalIgnoreCase)) { throw new InvalidOperationException("Blocked unsafe zip path: " + entry.FullName); }
+                    if (Path.IsPathRooted(entry.FullName)) { throw new InvalidOperationException("Blocked absolute zip path: " + entry.FullName); }
                     if (string.IsNullOrEmpty(entry.Name)) { Directory.CreateDirectory(destinationPath); continue; }
                     Directory.CreateDirectory(Path.GetDirectoryName(destinationPath));
                     entry.ExtractToFile(destinationPath, true);
@@ -68,6 +71,41 @@ namespace Contollo.Rdel.ZipRunner
             return manifest;
         }
 
+        private static RdelPackageMetadata ReadPackageMetadata(string payloadRoot, RdelManifest manifest)
+        {
+            var metadata = new RdelPackageMetadata();
+            string manifestPath = Path.Combine(payloadRoot, "contollo-rdel.json");
+            metadata.HasManifest = File.Exists(manifestPath);
+            metadata.ManifestPath = metadata.HasManifest ? manifestPath : null;
+
+            string readmeRelative = !string.IsNullOrWhiteSpace(manifest?.HumanReadmePath) ? manifest.HumanReadmePath : "README.md";
+            string contextRelative = !string.IsNullOrWhiteSpace(manifest?.AiContextPath) ? manifest.AiContextPath : "context.md";
+
+            string readmePath = Path.Combine(payloadRoot, readmeRelative);
+            string contextPath = Path.Combine(payloadRoot, contextRelative);
+
+            metadata.HasHumanReadme = File.Exists(readmePath);
+            metadata.HumanReadmePath = metadata.HasHumanReadme ? readmePath : null;
+            metadata.HumanReadmePreview = metadata.HasHumanReadme ? Preview(File.ReadAllText(readmePath)) : null;
+
+            metadata.HasAiContext = File.Exists(contextPath);
+            metadata.AiContextPath = metadata.HasAiContext ? contextPath : null;
+            metadata.AiContextPreview = metadata.HasAiContext ? Preview(File.ReadAllText(contextPath)) : null;
+
+            return metadata;
+        }
+
+        private static void WritePackageAwareness(RdelPackageMetadata metadata, RdelOutputPane pane)
+        {
+            if (metadata == null) { return; }
+            pane.WriteLine("Package metadata:");
+            pane.WriteLine("  Manifest: " + metadata.HasManifest);
+            pane.WriteLine("  Human README: " + metadata.HasHumanReadme);
+            pane.WriteLine("  AI context: " + metadata.HasAiContext);
+            if (!string.IsNullOrWhiteSpace(metadata.HumanReadmePreview)) { pane.WriteLine("  README preview: " + metadata.HumanReadmePreview); }
+            if (!string.IsNullOrWhiteSpace(metadata.AiContextPreview)) { pane.WriteLine("  Context preview: " + metadata.AiContextPreview); }
+        }
+
         private static string ResolveTargetRoot(string solutionRoot, string selectedProjectRoot, RdelManifest manifest)
         {
             string target = manifest?.Target ?? "solution";
@@ -80,7 +118,8 @@ namespace Contollo.Rdel.ZipRunner
             foreach (string sourceFile in Directory.GetFiles(payloadRoot, "*", SearchOption.AllDirectories))
             {
                 string relativePath = MakeRelativePath(payloadRoot, sourceFile);
-                if (relativePath.Equals("contollo-rdel.json", StringComparison.OrdinalIgnoreCase) || relativePath.Equals("contollo-rdel.txt", StringComparison.OrdinalIgnoreCase) || RdelPath.IsBlockedPath(relativePath)) { pane.WriteLine("Skipped: " + relativePath); continue; }
+                if (RdelPath.IsPackageMetadataPath(relativePath)) { pane.WriteLine("Package metadata skipped: " + relativePath); continue; }
+                if (RdelPath.IsBlockedPath(relativePath)) { pane.WriteLine("Blocked: " + relativePath); continue; }
                 string destinationFile = Path.Combine(targetRoot, relativePath);
                 string backupFile = Path.Combine(backupRoot, relativePath);
                 Directory.CreateDirectory(Path.GetDirectoryName(destinationFile));
@@ -94,6 +133,13 @@ namespace Contollo.Rdel.ZipRunner
                 appliedFiles.Add(relativePath);
                 pane.WriteLine("Applied: " + relativePath);
             }
+        }
+
+        private static string Preview(string text)
+        {
+            if (string.IsNullOrWhiteSpace(text)) { return string.Empty; }
+            text = text.Replace("\r", " ").Replace("\n", " ").Trim();
+            return text.Length <= 180 ? text : text.Substring(0, 180) + "...";
         }
 
         private static string MakeRelativePath(string root, string file)

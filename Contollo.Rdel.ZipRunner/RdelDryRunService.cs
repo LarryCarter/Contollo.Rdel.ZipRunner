@@ -22,16 +22,19 @@ namespace Contollo.Rdel.ZipRunner
             result.Manifest = ReadManifest(payloadRoot);
             result.TargetRoot = ResolveTargetRoot(solutionRoot, selectedProjectRoot, result.Manifest);
             result.PayloadRoot = payloadRoot;
+            result.PackageMetadata = ReadPackageMetadata(payloadRoot, result.Manifest);
 
             pane.WriteLine("Dry run payload root: " + payloadRoot);
             pane.WriteLine("Dry run target root: " + result.TargetRoot);
+            pane.WriteLine("Dry run package metadata: README=" + result.PackageMetadata.HasHumanReadme + ", context=" + result.PackageMetadata.HasAiContext);
 
             foreach (string sourceFile in Directory.GetFiles(payloadRoot, "*", SearchOption.AllDirectories))
             {
                 string relativePath = MakeRelativePath(payloadRoot, sourceFile);
-                if (relativePath.Equals("contollo-rdel.json", StringComparison.OrdinalIgnoreCase) || relativePath.Equals("contollo-rdel.txt", StringComparison.OrdinalIgnoreCase))
+                if (RdelPath.IsPackageMetadataPath(relativePath))
                 {
                     result.SkippedFiles.Add(relativePath);
+                    pane.WriteLine("Metadata skipped: " + relativePath);
                     continue;
                 }
 
@@ -72,6 +75,14 @@ namespace Contollo.Rdel.ZipRunner
                 writer.WriteLine("Payload Root: " + result.PayloadRoot);
                 writer.WriteLine("Target Root: " + result.TargetRoot);
                 writer.WriteLine();
+                if (result.PackageMetadata != null)
+                {
+                    writer.WriteLine("Package Metadata:");
+                    writer.WriteLine("  Manifest: " + result.PackageMetadata.HasManifest);
+                    writer.WriteLine("  Human README: " + result.PackageMetadata.HasHumanReadme);
+                    writer.WriteLine("  AI Context: " + result.PackageMetadata.HasAiContext);
+                    writer.WriteLine();
+                }
                 writer.WriteLine("Would Create:");
                 foreach (string file in result.WouldCreateFiles) { writer.WriteLine("  + " + file); }
                 writer.WriteLine();
@@ -98,6 +109,7 @@ namespace Contollo.Rdel.ZipRunner
                     string destinationPath = Path.GetFullPath(Path.Combine(extractRoot, entry.FullName));
                     string extractRootFull = Path.GetFullPath(extractRoot);
                     if (!destinationPath.StartsWith(extractRootFull, StringComparison.OrdinalIgnoreCase)) { throw new InvalidOperationException("Blocked unsafe zip path: " + entry.FullName); }
+                    if (Path.IsPathRooted(entry.FullName)) { throw new InvalidOperationException("Blocked absolute zip path: " + entry.FullName); }
                     if (string.IsNullOrEmpty(entry.Name)) { Directory.CreateDirectory(destinationPath); continue; }
                     Directory.CreateDirectory(Path.GetDirectoryName(destinationPath));
                     entry.ExtractToFile(destinationPath, true);
@@ -124,6 +136,23 @@ namespace Contollo.Rdel.ZipRunner
             return manifest;
         }
 
+        private static RdelPackageMetadata ReadPackageMetadata(string payloadRoot, RdelManifest manifest)
+        {
+            var metadata = new RdelPackageMetadata();
+            string manifestPath = Path.Combine(payloadRoot, "contollo-rdel.json");
+            metadata.HasManifest = File.Exists(manifestPath);
+            metadata.ManifestPath = metadata.HasManifest ? manifestPath : null;
+            string readmeRelative = !string.IsNullOrWhiteSpace(manifest?.HumanReadmePath) ? manifest.HumanReadmePath : "README.md";
+            string contextRelative = !string.IsNullOrWhiteSpace(manifest?.AiContextPath) ? manifest.AiContextPath : "context.md";
+            string readmePath = Path.Combine(payloadRoot, readmeRelative);
+            string contextPath = Path.Combine(payloadRoot, contextRelative);
+            metadata.HasHumanReadme = File.Exists(readmePath);
+            metadata.HumanReadmePath = metadata.HasHumanReadme ? readmePath : null;
+            metadata.HasAiContext = File.Exists(contextPath);
+            metadata.AiContextPath = metadata.HasAiContext ? contextPath : null;
+            return metadata;
+        }
+
         private static string ResolveTargetRoot(string solutionRoot, string selectedProjectRoot, RdelManifest manifest)
         {
             string target = manifest?.Target ?? "solution";
@@ -145,6 +174,7 @@ namespace Contollo.Rdel.ZipRunner
         public string PayloadRoot { get; set; }
         public string TargetRoot { get; set; }
         public RdelManifest Manifest { get; set; }
+        public RdelPackageMetadata PackageMetadata { get; set; }
         public List<string> WouldApplyFiles { get; set; } = new List<string>();
         public List<string> WouldCreateFiles { get; set; } = new List<string>();
         public List<string> WouldOverwriteFiles { get; set; } = new List<string>();
