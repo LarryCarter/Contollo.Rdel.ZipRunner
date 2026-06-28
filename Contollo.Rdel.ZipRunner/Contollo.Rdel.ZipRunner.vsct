@@ -1,70 +1,27 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <CommandTable xmlns="http://schemas.microsoft.com/VisualStudio/2005-10-18/CommandTable" xmlns:xs="http://www.w3.org/2001/XMLSchema">
-  <Extern href="stdidcmd.h"/>
-  <Extern href="vsshlids.h"/>
-
+  <Extern href="stdidcmd.h"/><Extern href="vsshlids.h"/>
   <Commands package="guidContolloRdelZipRunnerPackage">
-
     <Groups>
-      <!-- This invisible group places the Contollo RDEL submenu under Tools. -->
-      <Group guid="guidContolloRdelZipRunnerCommandSet" id="ContolloRdelToolsGroup" priority="0x0600">
-        <Parent guid="guidSHLMainMenu" id="IDM_VS_MENU_TOOLS"/>
-      </Group>
-
-      <!-- This group contains the actual commands inside the Contollo RDEL submenu. -->
-      <Group guid="guidContolloRdelZipRunnerCommandSet" id="ContolloRdelSubMenuGroup" priority="0x0100">
-        <Parent guid="guidContolloRdelZipRunnerCommandSet" id="ContolloRdelMenu"/>
-      </Group>
+      <Group guid="guidContolloRdelZipRunnerCommandSet" id="ContolloRdelToolsGroup" priority="0x0600"><Parent guid="guidSHLMainMenu" id="IDM_VS_MENU_TOOLS"/></Group>
+      <Group guid="guidContolloRdelZipRunnerCommandSet" id="ContolloRdelSubMenuGroup" priority="0x0100"><Parent guid="guidContolloRdelZipRunnerCommandSet" id="ContolloRdelMenu"/></Group>
+      <Group guid="guidContolloRdelZipRunnerCommandSet" id="ContolloRdelAiSessionGroup" priority="0x0200"><Parent guid="guidContolloRdelZipRunnerCommandSet" id="ContolloRdelMenu"/></Group>
     </Groups>
-
-    <Menus>
-      <Menu guid="guidContolloRdelZipRunnerCommandSet" id="ContolloRdelMenu" priority="0x0100" type="Menu">
-        <Parent guid="guidContolloRdelZipRunnerCommandSet" id="ContolloRdelToolsGroup"/>
-        <Strings>
-          <ButtonText>Contollo RDEL</ButtonText>
-          <CommandName>Contollo RDEL</CommandName>
-        </Strings>
-      </Menu>
-    </Menus>
-
+    <Menus><Menu guid="guidContolloRdelZipRunnerCommandSet" id="ContolloRdelMenu" priority="0x0100" type="Menu"><Parent guid="guidContolloRdelZipRunnerCommandSet" id="ContolloRdelToolsGroup"/><Strings><ButtonText>Contollo RDEL</ButtonText><CommandName>Contollo RDEL</CommandName></Strings></Menu></Menus>
     <Buttons>
-      <Button guid="guidContolloRdelZipRunnerCommandSet" id="ApplyZipUpdateCommandId" priority="0x0100" type="Button">
-        <Parent guid="guidContolloRdelZipRunnerCommandSet" id="ContolloRdelSubMenuGroup" />
-        <Strings>
-          <ButtonText>Apply Patch</ButtonText>
-          <CommandName>Apply Patch</CommandName>
-        </Strings>
-      </Button>
-
-      <Button guid="guidContolloRdelZipRunnerCommandSet" id="DryRunZipUpdateCommandId" priority="0x0110" type="Button">
-        <Parent guid="guidContolloRdelZipRunnerCommandSet" id="ContolloRdelSubMenuGroup" />
-        <Strings>
-          <ButtonText>Test Run</ButtonText>
-          <CommandName>Test Run</CommandName>
-        </Strings>
-      </Button>
-
-      <Button guid="guidContolloRdelZipRunnerCommandSet" id="RollbackLastRunCommandId" priority="0x0120" type="Button">
-        <Parent guid="guidContolloRdelZipRunnerCommandSet" id="ContolloRdelSubMenuGroup" />
-        <Strings>
-          <ButtonText>Rollback Last Patch</ButtonText>
-          <CommandName>Rollback Last Patch</CommandName>
-        </Strings>
-      </Button>
+      <Button guid="guidContolloRdelZipRunnerCommandSet" id="ApplyZipUpdateCommandId" priority="0x0100" type="Button"><Parent guid="guidContolloRdelZipRunnerCommandSet" id="ContolloRdelSubMenuGroup" /><Strings><ButtonText>Apply Patch</ButtonText><CommandName>Apply Patch</CommandName></Strings></Button>
+      <Button guid="guidContolloRdelZipRunnerCommandSet" id="DryRunZipUpdateCommandId" priority="0x0110" type="Button"><Parent guid="guidContolloRdelZipRunnerCommandSet" id="ContolloRdelSubMenuGroup" /><Strings><ButtonText>Test Run</ButtonText><CommandName>Test Run</CommandName></Strings></Button>
+      <Button guid="guidContolloRdelZipRunnerCommandSet" id="RollbackLastRunCommandId" priority="0x0120" type="Button"><Parent guid="guidContolloRdelZipRunnerCommandSet" id="ContolloRdelSubMenuGroup" /><Strings><ButtonText>Rollback Last Patch</ButtonText><CommandName>Rollback Last Patch</CommandName></Strings></Button>
+      <Button guid="guidContolloRdelZipRunnerCommandSet" id="CopyInitializeAiSessionCommandId" priority="0x0200" type="Button"><Parent guid="guidContolloRdelZipRunnerCommandSet" id="ContolloRdelAiSessionGroup" /><Strings><ButtonText>Copy Initialize AI Session</ButtonText><CommandName>Copy Initialize AI Session</CommandName></Strings></Button>
+      <Button guid="guidContolloRdelZipRunnerCommandSet" id="CopyRehydrateAiSessionCommandId" priority="0x0210" type="Button"><Parent guid="guidContolloRdelZipRunnerCommandSet" id="ContolloRdelAiSessionGroup" /><Strings><ButtonText>Copy Rehydrate AI Session</ButtonText><CommandName>Copy Rehydrate AI Session</CommandName></Strings></Button>
+      <Button guid="guidContolloRdelZipRunnerCommandSet" id="CopyContinueAiSessionCommandId" priority="0x0220" type="Button"><Parent guid="guidContolloRdelZipRunnerCommandSet" id="ContolloRdelAiSessionGroup" /><Strings><ButtonText>Copy Continue AI Session</ButtonText><CommandName>Copy Continue AI Session</CommandName></Strings></Button>
     </Buttons>
   </Commands>
-
   <Symbols>
     <GuidSymbol name="guidContolloRdelZipRunnerPackage" value="{a1361a6f-005b-4060-a6ef-3389916ce837}" />
-
     <GuidSymbol name="guidContolloRdelZipRunnerCommandSet" value="{50fbcc4e-c89d-48ef-aa3a-3c1f8f3f9d4d}">
-      <IDSymbol name="ContolloRdelToolsGroup" value="0x1020" />
-      <IDSymbol name="ContolloRdelMenu" value="0x1021" />
-      <IDSymbol name="ContolloRdelSubMenuGroup" value="0x1022" />
-
-      <IDSymbol name="ApplyZipUpdateCommandId" value="0x0100" />
-      <IDSymbol name="DryRunZipUpdateCommandId" value="0x0101" />
-      <IDSymbol name="RollbackLastRunCommandId" value="0x0102" />
+      <IDSymbol name="ContolloRdelToolsGroup" value="0x1020" /><IDSymbol name="ContolloRdelMenu" value="0x1021" /><IDSymbol name="ContolloRdelSubMenuGroup" value="0x1022" /><IDSymbol name="ContolloRdelAiSessionGroup" value="0x1023" />
+      <IDSymbol name="ApplyZipUpdateCommandId" value="0x0100" /><IDSymbol name="DryRunZipUpdateCommandId" value="0x0101" /><IDSymbol name="RollbackLastRunCommandId" value="0x0102" /><IDSymbol name="CopyInitializeAiSessionCommandId" value="0x0103" /><IDSymbol name="CopyRehydrateAiSessionCommandId" value="0x0104" /><IDSymbol name="CopyContinueAiSessionCommandId" value="0x0105" />
     </GuidSymbol>
   </Symbols>
 </CommandTable>

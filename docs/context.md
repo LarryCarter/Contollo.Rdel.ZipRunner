@@ -1,44 +1,35 @@
 # Contollo.Rdel.ZipRunner — AI Project Context
 
-## Current AI Operating Layer
+## AI Session Manager Update
 
-RDEL now has explicit AI-facing documentation under `docs/`.
+The Visual Studio extension now begins adding an AI Session Manager.
 
-AI sessions should read:
+The initial implementation adds copy-to-clipboard commands for:
 
 ```text
-docs/context.md
-docs/RDEL-AI-OPERATOR-GUIDE.md
-docs/RDEL-PACKAGE-AUTHORING-GUIDE.md
-docs/RDEL-VISUAL-STUDIO-PLUGIN-USAGE.md
-docs/RDEL-AI-SPEC.md
-docs/ai-instructions.md
-docs/DECISIONS.md
-docs/memory.md
+Initialize AI Session
+Rehydrate AI Session
+Continue AI Session
 ```
 
-## Current Rule
+These commands create AI-ready prompts so external AI chats can understand RDEL format, project context, plugin limits, validation rules, and current task context.
 
-AI should not be expected to infer how RDEL works from chat history.
+## Session Strategy
 
-The repository must carry its own protocol explanation.
+### Initialize
 
-## Important Clarification
+Use once at the start of a new AI session when the model does not know RDEL or Neuro Commander Studio.
 
-`context.md` alone is not enough.
+### Rehydrate
 
-RDEL now separates the AI communication layer:
+Use when switching AI providers or recovering after context loss.
 
-- `docs/context.md` = project state
-- `docs/memory.md` = durable project memory
-- `docs/DECISIONS.md` = architecture decisions
-- `docs/ai-instructions.md` = AI behavior rules
-- `docs/RDEL-AI-SPEC.md` = formal communication specification
-- `docs/RDEL-AI-OPERATOR-GUIDE.md` = step-by-step AI operating manual
-- `docs/RDEL-PACKAGE-AUTHORING-GUIDE.md` = how to build packages
-- `docs/RDEL-VISUAL-STUDIO-PLUGIN-USAGE.md` = how to use the plugin
-- `docs/RDEL-AI-PROMPT-TEMPLATES.md` = prompts for other AI models
+### Continue
 
-## Decision Added
+Use for normal daily work after the AI already understands the project.
 
-A future AI must be able to read the repository documentation and produce a compliant RDEL package without needing the original ChatGPT conversation.
+## Current Implementation Limits
+
+The first version only copies generated text to the clipboard.
+
+Future versions should add preview/edit before copy, selectable context sources, output window capture, build/test output capture, context package export, and embedded chat injection.

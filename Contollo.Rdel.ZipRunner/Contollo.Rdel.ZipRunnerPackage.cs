@@ -16,15 +16,13 @@ namespace Contollo.Rdel.ZipRunner
     {
         public const string PackageGuidString = "a1361a6f-005b-4060-a6ef-3389916ce837";
 
-        protected override async Task InitializeAsync(
-            CancellationToken cancellationToken,
-            IProgress<ServiceProgressData> progress)
+        protected override async Task InitializeAsync(CancellationToken cancellationToken, IProgress<ServiceProgressData> progress)
         {
             await JoinableTaskFactory.SwitchToMainThreadAsync(cancellationToken);
-
             await ApplyZipUpdateCommand.InitializeAsync(this);
             await DryRunZipUpdateCommand.InitializeAsync(this);
             await RollbackLastRunCommand.InitializeAsync(this);
+            await AiSessionContextCommand.InitializeAsync(this);
         }
     }
 }
