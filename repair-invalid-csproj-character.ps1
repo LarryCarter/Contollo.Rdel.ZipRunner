@@ -1,3 +1,12 @@
+$ProjectFile = "C:\Users\larry\source\repos\Contollo.Rdel.ZipRunner\Contollo.Rdel.ZipRunner\Contollo.Rdel.ZipRunner.csproj"
+$BackupFile = "$ProjectFile.invalid-char-" + (Get-Date -Format "yyyyMMdd-HHmmss")
+
+if (Test-Path $ProjectFile) {
+    Copy-Item $ProjectFile $BackupFile -Force
+    Write-Host "Backed up broken project file to: $BackupFile"
+}
+
+$FixedContent = @'
 <?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
@@ -98,3 +107,30 @@
     </VSCTCompile>
   </ItemGroup>
 </Project>
+
+'@
+
+# Write as UTF-8 without invalid control characters.
+[System.IO.File]::WriteAllText($ProjectFile, $FixedContent, [System.Text.UTF8Encoding]::new($false))
+
+# Verify there are no XML-invalid control characters.
+$content = [System.IO.File]::ReadAllText($ProjectFile)
+$badChars = @()
+for ($i = 0; $i -lt $content.Length; $i++) {
+    $c = [int][char]$content[$i]
+    if (($c -lt 32) -and ($c -ne 9) -and ($c -ne 10) -and ($c -ne 13)) {
+        $badChars += "Index $i = 0x{0:X2}" -f $c
+    }
+}
+
+if ($badChars.Count -gt 0) {
+    Write-Host "Invalid characters remain:"
+    $badChars | ForEach-Object { Write-Host $_ }
+    exit 1
+}
+
+Write-Host "Repaired project file:"
+Write-Host $ProjectFile
+Write-Host "No invalid XML control characters detected."
+Write-Host ""
+Write-Host "Close Visual Studio completely, reopen the solution, then Build from the Visual Studio Build menu."

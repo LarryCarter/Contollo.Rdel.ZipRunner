@@ -1,1 +1,1 @@
-Run restore-rdel-csproj-guid.ps1 from PowerShell. It fixes the C# project type GUID typo 00F04F -> 00C04F and removes the accidental root-level csproj if present.
+Run repair-invalid-csproj-character.ps1. It rewrites the nested .csproj and removes the invalid 0x0B control character caused by a bad escaped \v sequence.
