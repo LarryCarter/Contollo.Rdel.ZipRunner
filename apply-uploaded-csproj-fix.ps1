@@ -1,3 +1,12 @@
+$ProjectFile = "C:\Users\larry\source\repos\Contollo.Rdel.ZipRunner\Contollo.Rdel.ZipRunner\Contollo.Rdel.ZipRunner.csproj"
+$BackupFile = "$ProjectFile.before-uploaded-fix-" + (Get-Date -Format "yyyyMMdd-HHmmss")
+
+if (Test-Path $ProjectFile) {
+    Copy-Item $ProjectFile $BackupFile -Force
+    Write-Host "Backed up current project file to: $BackupFile"
+}
+
+$FixedContent = @'
 <?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
@@ -68,3 +77,28 @@
   <Import Project="$(VSToolsPath)\VSSDK\Microsoft.VsSDK.targets" Condition="'$(VSToolsPath)' != ''" />
   <ItemGroup><VSCTCompile Include="Contollo.Rdel.ZipRunner.vsct"><ResourceName>Menus.ctmenu</ResourceName></VSCTCompile></ItemGroup>
 </Project>
+
+'@
+
+[System.IO.File]::WriteAllText($ProjectFile, $FixedContent, [System.Text.UTF8Encoding]::new($false))
+
+$content = [System.IO.File]::ReadAllText($ProjectFile)
+$badChars = @()
+
+for ($i = 0; $i -lt $content.Length; $i++) {
+    $c = [int][char]$content[$i]
+    if (($c -lt 32) -and ($c -ne 9) -and ($c -ne 10) -and ($c -ne 13)) {
+        $badChars += "Index $i = 0x{0:X2}" -f $c
+    }
+}
+
+if ($badChars.Count -gt 0) {
+    Write-Host "Invalid XML control characters remain:"
+    $badChars | ForEach-Object { Write-Host $_ }
+    exit 1
+}
+
+Write-Host "Applied uploaded fixed project file."
+Write-Host "No invalid XML control characters detected."
+Write-Host ""
+Write-Host "Now close Visual Studio completely and reopen the solution."
