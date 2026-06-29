@@ -1,9 +1,17 @@
 # RDEL Architecture Decisions
 
-## ADR-010 — AI Session Manager becomes Context Assembly Engine
+## ADR-012 — Use RDEL Session Protocol
 
-Refactor AI Session Manager so session text is assembled from context providers and templates instead of hardcoded StringBuilder blocks.
+Use RSP as the protocol name because the protocol is broader than AI.
 
-## ADR-011 — Preserve forward-slash VSToolsPath
+## ADR-013 — Context Levels replace arbitrary truncation
 
-Use `$(MSBuildExtensionsPath32)/Microsoft/VisualStudio/v$(VisualStudioVersion)` to avoid the `\v` sequence becoming invalid XML character 0x0B.
+Use Reference, Summary, and Full instead of arbitrary truncation.
+
+## ADR-014 — Add Failure and Response Contracts
+
+AI must know what to do when uncertain and how to structure implementation responses.
+
+## ADR-015 — Context Package becomes a first-class output
+
+Some AI providers cannot access repository URLs, so a context ZIP is required.

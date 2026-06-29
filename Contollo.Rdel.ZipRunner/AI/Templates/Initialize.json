@@ -3,6 +3,10 @@
   "Providers": [
     "Protocol",
     "AIContract",
+    "FailureContract",
+    "ResponseContract",
+    "CapabilityMatrix",
+    "PackageSkeleton",
     "Project",
     "ProjectDocs",
     "UserRequest"

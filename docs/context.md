@@ -1,15 +1,19 @@
 # Contollo.Rdel.ZipRunner — AI Project Context
 
-## Context Assembly Engine Refactor
+## RDEL Session Protocol Update
 
-AI Session Manager is being refactored into a Context Assembly Engine.
+AI Session Manager is now formalized as **RDEL Session Protocol (RSP)**.
 
-The prompt is not the product. Context is the product.
+Settings path:
 
-The same assembled context can later be copied to clipboard, injected into embedded chat, sent to an API provider, or exported as a context package.
-
-Important: preserve the safe forward-slash VSToolsPath form:
-
-```xml
-$(MSBuildExtensionsPath32)/Microsoft/VisualStudio/v$(VisualStudioVersion)
+```text
+%LOCALAPPDATA%/Contollo/RDEL/ai-session-settings.json
 ```
+
+New command:
+
+```text
+Tools -> Contollo RDEL -> Export AI Context Package
+```
+
+Feature closure items added: Failure Contract, Response Contract, Capability Matrix, Canonical Package Skeleton, Context Levels, Context Package Export, and RSP naming.
