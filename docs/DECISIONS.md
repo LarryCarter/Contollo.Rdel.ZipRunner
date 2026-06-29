@@ -1,15 +1,15 @@
 # RDEL Architecture Decisions
 
-## ADR-016 — Continue Session captures Output Window panes
+## ADR-017 — AI Session Settings must be user-editable
 
 Decision:
 
-The Continue Session should capture Visual Studio Output Window panes instead of requiring manual paste.
+Add a Visual Studio settings dialog for RDEL Session Protocol context settings.
 
 Reason:
 
-Manual copying of build, test, and Contollo RDEL output is one of the user's main pain points. The session context feature should reduce that friction.
+The settings backend existed, but requiring manual JSON edits made the feature incomplete.
 
 Consequence:
 
-Output capture is now part of the context provider layer. Future versions can add pane filtering, selected panes, token estimates, and preview/edit before copy.
+Users can now configure context levels and context package output folder directly from Visual Studio.

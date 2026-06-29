@@ -1,33 +1,22 @@
 # Contollo.Rdel.ZipRunner — AI Project Context
 
-## Output Window Context Fix
+## AI Session Settings UI
 
-Continue Session should not require the user to manually copy output panes.
-
-The OutputPlaceholderProvider now attempts to capture Visual Studio Output Window panes directly through DTE:
+The extension now includes a Visual Studio settings dialog:
 
 ```text
-DTE2.ToolWindows.OutputWindow.OutputWindowPanes
+Tools -> Contollo RDEL -> AI Session Settings
 ```
 
-It includes each pane in the generated session context and trims very large panes to the most recent output.
+The dialog edits:
 
-## Build Fix
+- Initialize context level
+- Rehydrate context level
+- Continue context level
+- Context package output directory
 
-MemoryProvider and DecisionsProvider were updated to use:
+Settings are stored at:
 
 ```text
-ContextLevel.Summary
+%LOCALAPPDATA%/Contollo/RDEL/ai-session-settings.json
 ```
-
-instead of passing integer character limits to `ProviderText.ReadDocument`.
-
-## Current Status
-
-The Continue session should now include:
-
-- Active document
-- Git status
-- Captured Output Window panes
-- RDEL run history path
-- Current task placeholder
