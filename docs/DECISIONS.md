@@ -1,17 +1,15 @@
 # RDEL Architecture Decisions
 
-## ADR-012 — Use RDEL Session Protocol
+## ADR-016 — Continue Session captures Output Window panes
 
-Use RSP as the protocol name because the protocol is broader than AI.
+Decision:
 
-## ADR-013 — Context Levels replace arbitrary truncation
+The Continue Session should capture Visual Studio Output Window panes instead of requiring manual paste.
 
-Use Reference, Summary, and Full instead of arbitrary truncation.
+Reason:
 
-## ADR-014 — Add Failure and Response Contracts
+Manual copying of build, test, and Contollo RDEL output is one of the user's main pain points. The session context feature should reduce that friction.
 
-AI must know what to do when uncertain and how to structure implementation responses.
+Consequence:
 
-## ADR-015 — Context Package becomes a first-class output
-
-Some AI providers cannot access repository URLs, so a context ZIP is required.
+Output capture is now part of the context provider layer. Future versions can add pane filtering, selected panes, token estimates, and preview/edit before copy.

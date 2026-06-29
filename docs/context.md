@@ -1,19 +1,33 @@
 # Contollo.Rdel.ZipRunner — AI Project Context
 
-## RDEL Session Protocol Update
+## Output Window Context Fix
 
-AI Session Manager is now formalized as **RDEL Session Protocol (RSP)**.
+Continue Session should not require the user to manually copy output panes.
 
-Settings path:
-
-```text
-%LOCALAPPDATA%/Contollo/RDEL/ai-session-settings.json
-```
-
-New command:
+The OutputPlaceholderProvider now attempts to capture Visual Studio Output Window panes directly through DTE:
 
 ```text
-Tools -> Contollo RDEL -> Export AI Context Package
+DTE2.ToolWindows.OutputWindow.OutputWindowPanes
 ```
 
-Feature closure items added: Failure Contract, Response Contract, Capability Matrix, Canonical Package Skeleton, Context Levels, Context Package Export, and RSP naming.
+It includes each pane in the generated session context and trims very large panes to the most recent output.
+
+## Build Fix
+
+MemoryProvider and DecisionsProvider were updated to use:
+
+```text
+ContextLevel.Summary
+```
+
+instead of passing integer character limits to `ProviderText.ReadDocument`.
+
+## Current Status
+
+The Continue session should now include:
+
+- Active document
+- Git status
+- Captured Output Window panes
+- RDEL run history path
+- Current task placeholder
