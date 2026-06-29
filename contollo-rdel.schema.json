@@ -39,91 +39,41 @@
         "Custom"
       ]
     },
-    "SchemaVersion": {
-      "type": "string"
-    },
-    "ManifestVersion": {
-      "type": "string"
-    },
-    "PackageVersion": {
-      "type": "string"
-    },
-    "PackageType": {
-      "type": "string"
-    },
-    "ChangeIntent": {
-      "type": "string"
-    },
-    "TrustLevel": {
-      "type": "string"
-    },
-    "SourceProvider": {
-      "type": "string"
-    },
-    "HumanReadmePath": {
-      "type": "string"
-    },
-    "AiContextPath": {
-      "type": "string"
-    },
-    "ExpectedAfterApply": {
-      "type": "object",
-      "properties": {
-        "BuildMustPass": {
-          "type": "boolean"
-        },
-        "Notes": {
-          "type": "string"
-        },
-        "ForbiddenChangedPaths": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          }
-        }
-      },
-      "additionalProperties": true
-    },
-    "Files": {
+    "DocumentationOperations": {
       "type": "array",
       "items": {
         "type": "object",
         "required": [
-          "Path",
-          "Status"
+          "Type",
+          "Target",
+          "Source"
         ],
         "properties": {
-          "Path": {
-            "type": "string"
-          },
-          "Status": {
+          "Type": {
             "type": "string",
             "enum": [
-              "New",
-              "Updated",
-              "Deleted",
-              "No Change"
+              "Append"
             ]
           },
-          "Reason": {
+          "Target": {
+            "type": "string"
+          },
+          "Source": {
+            "type": "string"
+          },
+          "Section": {
+            "type": "string"
+          },
+          "Id": {
             "type": "string"
           }
-        }
+        },
+        "additionalProperties": true
       }
     },
-    "ContextSnapshot": {
+    "ExpectedAfterApply": {
       "type": "object",
-      "properties": {
-        "SnapshotId": {
-          "type": "string"
-        },
-        "ContextPolicy": {
-          "type": "string"
-        },
-        "CreatedUtc": {
-          "type": "string"
-        }
-      }
+      "additionalProperties": true
     }
   },
   "additionalProperties": true

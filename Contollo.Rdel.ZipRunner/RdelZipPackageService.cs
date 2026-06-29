@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
@@ -30,6 +30,7 @@ namespace Contollo.Rdel.ZipRunner
             pane.WriteLine("Target root: " + result.TargetRoot);
             WritePackageAwareness(result.PackageMetadata, pane);
             ApplyFiles(payloadRoot, result.TargetRoot, backupRoot, result.AppliedFiles, pane);
+            new RdelDocumentationOperationService().Apply(payloadRoot, result.TargetRoot, backupRoot, result.Manifest, result.AppliedFiles, pane);
             return result;
         }
 

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.IO;
 using System.Text.RegularExpressions;
 
@@ -49,6 +49,7 @@ namespace Contollo.Rdel.ZipRunner
                 || normalized.Equals("README.md", StringComparison.OrdinalIgnoreCase)
                 || normalized.Equals("context.md", StringComparison.OrdinalIgnoreCase)
                 || normalized.Equals("manifest.json", StringComparison.OrdinalIgnoreCase)
+                || normalized.StartsWith(".rdel-docops/", StringComparison.OrdinalIgnoreCase)
                 || normalized.StartsWith("rdel-package/", StringComparison.OrdinalIgnoreCase)
                 || normalized.StartsWith("verification/", StringComparison.OrdinalIgnoreCase)
                 || normalized.StartsWith("rollback/", StringComparison.OrdinalIgnoreCase)

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 
 namespace Contollo.Rdel.ZipRunner
@@ -58,13 +58,11 @@ namespace Contollo.Rdel.ZipRunner
 
     internal sealed class RdelManifest
     {
-        // Current RDEL fields. Keep these stable so existing packages keep working.
         public string Name { get; set; }
         public string Description { get; set; }
         public string Target { get; set; }
         public string[] Commands { get; set; }
 
-        // Forward-compatible RDEL 2.0 metadata fields. These are optional and ignored by older packages.
         public string SchemaVersion { get; set; }
         public string PackageType { get; set; }
         public string ChangeIntent { get; set; }
@@ -76,6 +74,7 @@ namespace Contollo.Rdel.ZipRunner
         public RdelExpectedContract ExpectedAfterApply { get; set; }
         public string[] BlockedFilePatterns { get; set; }
         public string[] RequiredFiles { get; set; }
+        public RdelDocumentationOperation[] DocumentationOperations { get; set; }
 
         public static readonly string[] DefaultCommands =
         {
@@ -83,6 +82,15 @@ namespace Contollo.Rdel.ZipRunner
             "dotnet build --no-restore",
             "dotnet test --no-build"
         };
+    }
+
+    internal sealed class RdelDocumentationOperation
+    {
+        public string Type { get; set; }
+        public string Target { get; set; }
+        public string Source { get; set; }
+        public string Section { get; set; }
+        public string Id { get; set; }
     }
 
     internal sealed class RdelBaselineContract

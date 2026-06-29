@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
@@ -59,6 +59,13 @@ namespace Contollo.Rdel.ZipRunner
                 result.WouldApplyFiles.Add(relativePath);
             }
 
+            foreach (RdelDocumentationOperation operation in new RdelDocumentationOperationService().DiscoverOperations(payloadRoot, result.Manifest))
+            {
+                string target = RdelPath.Normalize(operation.Target);
+                result.WouldApplyFiles.Add(target + " (DocOps append)");
+                pane.WriteLine("Would append DocOps: " + operation.Source + " -> " + target);
+            }
+
             string[] commands = result.Manifest != null && result.Manifest.Commands != null && result.Manifest.Commands.Length > 0 ? result.Manifest.Commands : RdelManifest.DefaultCommands;
             result.Commands.AddRange(commands);
             foreach (string command in commands) { pane.WriteLine("Would run: " + command); }
@@ -88,6 +95,9 @@ namespace Contollo.Rdel.ZipRunner
                 writer.WriteLine();
                 writer.WriteLine("Would Overwrite:");
                 foreach (string file in result.WouldOverwriteFiles) { writer.WriteLine("  * " + file); }
+                writer.WriteLine();
+                writer.WriteLine("Would Apply / Append:");
+                foreach (string file in result.WouldApplyFiles) { writer.WriteLine("  > " + file); }
                 writer.WriteLine();
                 writer.WriteLine("Blocked:");
                 foreach (string file in result.BlockedFiles) { writer.WriteLine("  ! " + file); }

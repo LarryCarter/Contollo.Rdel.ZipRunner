@@ -52,6 +52,7 @@
     <Compile Include="RdelSolutionLocator.cs" />
     <Compile Include="RdelPath.cs" />
     <Compile Include="RdelZipPackageService.cs" />
+    <Compile Include="RdelDocumentationOperationService.cs" />
     <Compile Include="RdelGitCheckpointService.cs" />
     <Compile Include="RdelCommandRunner.cs" />
     <Compile Include="RdelProcess.cs" />
