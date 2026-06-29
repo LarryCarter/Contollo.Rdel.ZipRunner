@@ -1,0 +1,130 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://larrycarter.github.io/Contollo.Rdel.ZipRunner/contollo-rdel.schema.json",
+  "title": "Contollo RDEL Manifest",
+  "type": "object",
+  "required": [
+    "Name",
+    "Description",
+    "Target",
+    "Commands"
+  ],
+  "properties": {
+    "Name": {
+      "type": "string",
+      "minLength": 1
+    },
+    "Description": {
+      "type": "string"
+    },
+    "Target": {
+      "type": "string",
+      "enum": [
+        "solution",
+        "selected-project"
+      ]
+    },
+    "Commands": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "ValidationProfile": {
+      "type": "string",
+      "enum": [
+        "GitOnly",
+        "DotNetCli",
+        "VisualStudioMsBuild",
+        "Custom"
+      ]
+    },
+    "SchemaVersion": {
+      "type": "string"
+    },
+    "ManifestVersion": {
+      "type": "string"
+    },
+    "PackageVersion": {
+      "type": "string"
+    },
+    "PackageType": {
+      "type": "string"
+    },
+    "ChangeIntent": {
+      "type": "string"
+    },
+    "TrustLevel": {
+      "type": "string"
+    },
+    "SourceProvider": {
+      "type": "string"
+    },
+    "HumanReadmePath": {
+      "type": "string"
+    },
+    "AiContextPath": {
+      "type": "string"
+    },
+    "ExpectedAfterApply": {
+      "type": "object",
+      "properties": {
+        "BuildMustPass": {
+          "type": "boolean"
+        },
+        "Notes": {
+          "type": "string"
+        },
+        "ForbiddenChangedPaths": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "additionalProperties": true
+    },
+    "Files": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "Path",
+          "Status"
+        ],
+        "properties": {
+          "Path": {
+            "type": "string"
+          },
+          "Status": {
+            "type": "string",
+            "enum": [
+              "New",
+              "Updated",
+              "Deleted",
+              "No Change"
+            ]
+          },
+          "Reason": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "ContextSnapshot": {
+      "type": "object",
+      "properties": {
+        "SnapshotId": {
+          "type": "string"
+        },
+        "ContextPolicy": {
+          "type": "string"
+        },
+        "CreatedUtc": {
+          "type": "string"
+        }
+      }
+    }
+  },
+  "additionalProperties": true
+}

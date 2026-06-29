@@ -1,0 +1,22 @@
+{
+  "Name": "Code Change Package Name",
+  "Description": "Describe the code change.",
+  "Target": "solution",
+  "ValidationProfile": "GitOnly",
+  "Commands": [
+    "git status --porcelain"
+  ],
+  "SchemaVersion": "1.1-current-compatible",
+  "ManifestVersion": "1.2-preview",
+  "PackageVersion": "1.2.x-preview",
+  "PackageType": "FeatureOrBugFix",
+  "ChangeIntent": "Explain why this code change exists.",
+  "TrustLevel": "ExternalGenerated",
+  "SourceProvider": "AI",
+  "HumanReadmePath": "README.md",
+  "AiContextPath": "docs/context.md",
+  "ExpectedAfterApply": {
+    "BuildMustPass": true,
+    "Notes": "For VSIX projects, validate by building from the Visual Studio Build menu."
+  }
+}

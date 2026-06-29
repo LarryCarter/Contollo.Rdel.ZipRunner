@@ -1,15 +1,35 @@
 # RDEL Architecture Decisions
 
-## ADR-017 — AI Session Settings must be user-editable
+## ADR-018 — Keep engineering workflow policy out of core RDEL
 
 Decision:
 
-Add a Visual Studio settings dialog for RDEL Session Protocol context settings.
+Do not include branching, PR rules, GitHub Flow, Conventional Commits, or host-specific CI/CD in core RDEL.
 
 Reason:
 
-The settings backend existed, but requiring manual JSON edits made the feature incomplete.
+RDEL must remain repository-host agnostic.
 
 Consequence:
 
-Users can now configure context levels and context package output folder directly from Visual Studio.
+Those concerns may later become organization/project policy modules, but not core protocol.
+
+## ADR-019 — Add repo-local context store
+
+Decision:
+
+Add `docs/.rdel-context/` as the durable repo-local context store.
+
+Reason:
+
+AI providers often lose project scope. A repo-local context store gives every provider the same source of truth.
+
+## ADR-020 — Add schema and preflight tooling
+
+Decision:
+
+Add `contollo-rdel.schema.json` and `tools/Validate-RdelPackage.ps1`.
+
+Reason:
+
+Malformed packages should be caught before apply. Preflight must be host-agnostic and runnable locally.

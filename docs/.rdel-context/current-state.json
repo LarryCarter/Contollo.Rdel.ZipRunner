@@ -1,0 +1,46 @@
+{
+  "project": "Contollo.Rdel.ZipRunner",
+  "epic": "Epic 1.2",
+  "story": "AI Context Manager / RDEL Session Protocol",
+  "status": "Foundation closing",
+  "protocol": {
+    "name": "RDEL Session Protocol",
+    "abbreviation": "RSP",
+    "version": "1.2-preview"
+  },
+  "contextEngine": {
+    "providers": [
+      "Protocol",
+      "AIContract",
+      "FailureContract",
+      "ResponseContract",
+      "CapabilityMatrix",
+      "PackageSkeleton",
+      "Project",
+      "ProjectDocs",
+      "Memory",
+      "Decisions",
+      "ActiveDocument",
+      "GitStatus",
+      "OutputPlaceholder",
+      "UserRequest"
+    ],
+    "templates": [
+      "Initialize",
+      "Rehydrate",
+      "Continue"
+    ],
+    "renderers": [
+      "MarkdownContextRenderer"
+    ]
+  },
+  "knownLimitations": [
+    "No patch/hunk package apply",
+    "No delete package operation",
+    "No metadata export",
+    "No package signatures",
+    "No dependency enforcement",
+    "Context preview window not implemented yet",
+    "Token estimator not implemented yet"
+  ]
+}

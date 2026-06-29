@@ -1,0 +1,22 @@
+{
+  "Name": "Documentation Package Name",
+  "Description": "Describe the documentation-only change.",
+  "Target": "solution",
+  "ValidationProfile": "GitOnly",
+  "Commands": [
+    "git status --porcelain"
+  ],
+  "SchemaVersion": "1.1-current-compatible",
+  "ManifestVersion": "1.2-preview",
+  "PackageVersion": "1.2.x-preview",
+  "PackageType": "DocumentationAndContext",
+  "ChangeIntent": "Explain why this documentation/context change exists.",
+  "TrustLevel": "ExternalGenerated",
+  "SourceProvider": "AI",
+  "HumanReadmePath": "README.md",
+  "AiContextPath": "docs/context.md",
+  "ExpectedAfterApply": {
+    "BuildMustPass": false,
+    "Notes": "Documentation-only package. Build is not required."
+  }
+}

@@ -1,5 +1,19 @@
 # RDEL Project Memory
 
-RSP is not just a prompt. It is a session protocol rendered into clipboard text today, and later into embedded chat, API payloads, or context packages.
+## Context Manager Foundation Closed
 
-SourcePack handled portable software state. RDEL handles portable change state. RSP/context packages handle portable AI session state.
+The AI Context Manager foundation now includes:
+
+- RDEL Session Protocol
+- Context Assembly Engine
+- context levels
+- settings UI
+- output capture
+- context package export
+- repo-local context store
+- schema and preflight tooling
+- package templates
+
+## Boundary
+
+RDEL core remains host-agnostic. Engineering workflows such as branching, PR rules, and CI/CD are not core RDEL.
