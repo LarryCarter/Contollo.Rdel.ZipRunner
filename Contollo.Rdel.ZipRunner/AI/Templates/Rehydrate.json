@@ -1,0 +1,11 @@
+{
+  "Name": "Rehydrate",
+  "Providers": [
+    "Protocol",
+    "Project",
+    "Memory",
+    "Decisions",
+    "GitStatus",
+    "UserRequest"
+  ]
+}

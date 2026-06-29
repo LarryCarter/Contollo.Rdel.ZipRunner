@@ -1,0 +1,10 @@
+{
+  "Name": "Continue",
+  "Providers": [
+    "Project",
+    "ActiveDocument",
+    "GitStatus",
+    "OutputPlaceholder",
+    "UserRequest"
+  ]
+}

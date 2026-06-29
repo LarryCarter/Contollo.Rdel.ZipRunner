@@ -1,8 +1,8 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <MinimumVisualStudioVersion>17.0</MinimumVisualStudioVersion>
-    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\$(VisualStudioVersion)</VSToolsPath>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)/Microsoft/VisualStudio/v$(VisualStudioVersion)</VSToolsPath>
   </PropertyGroup>
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -19,10 +19,6 @@
     <GeneratePkgDefFile>true</GeneratePkgDefFile>
     <UseCodebase>true</UseCodebase>
     <IncludeAssemblyInVSIXContainer>true</IncludeAssemblyInVSIXContainer>
-    <IncludeDebugSymbolsInVSIXContainer>false</IncludeDebugSymbolsInVSIXContainer>
-    <IncludeDebugSymbolsInLocalVSIXDeployment>false</IncludeDebugSymbolsInLocalVSIXDeployment>
-    <CopyBuildOutputToOutputDirectory>true</CopyBuildOutputToOutputDirectory>
-    <CopyOutputSymbolsToOutputDirectory>true</CopyOutputSymbolsToOutputDirectory>
     <StartAction>Program</StartAction>
     <StartProgram Condition="'$(DevEnvDir)' != ''">$(DevEnvDir)devenv.exe</StartProgram>
     <StartArguments>/rootsuffix Exp</StartArguments>
@@ -49,15 +45,48 @@
     <Compile Include="RdelVerifier.cs" />
     <Compile Include="AiSessionContextBuilder.cs" />
     <Compile Include="AiSessionContextCommand.cs" />
+    <Compile Include="AI\Engine\AiSessionContextKind.cs" />
+    <Compile Include="AI\Engine\ContextAssemblyEngine.cs" />
+    <Compile Include="AI\Engine\ContextAssemblyRequest.cs" />
+    <Compile Include="AI\Engine\ContextSection.cs" />
+    <Compile Include="AI\Engine\ContextTemplate.cs" />
+    <Compile Include="AI\Engine\ContextTemplateRegistry.cs" />
+    <Compile Include="AI\Engine\IContextProvider.cs" />
+    <Compile Include="AI\Engine\IContextRenderer.cs" />
+    <Compile Include="AI\Providers\ActiveDocumentProvider.cs" />
+    <Compile Include="AI\Providers\AiContractProvider.cs" />
+    <Compile Include="AI\Providers\DecisionsProvider.cs" />
+    <Compile Include="AI\Providers\GitStatusProvider.cs" />
+    <Compile Include="AI\Providers\MemoryProvider.cs" />
+    <Compile Include="AI\Providers\OutputPlaceholderProvider.cs" />
+    <Compile Include="AI\Providers\ProjectDocsProvider.cs" />
+    <Compile Include="AI\Providers\ProjectProvider.cs" />
+    <Compile Include="AI\Providers\ProtocolProvider.cs" />
+    <Compile Include="AI\Providers\ProviderText.cs" />
+    <Compile Include="AI\Providers\UserRequestProvider.cs" />
+    <Compile Include="AI\Renderers\MarkdownContextRenderer.cs" />
     <Compile Include="DryRunZipUpdateCommand.cs" />
     <Compile Include="RollbackLastRunCommand.cs" />
     <Compile Include="RdelDryRunService.cs" />
     <Compile Include="RdelRollbackService.cs" />
     <Compile Include="Contollo.Rdel.ZipRunnerPackage.cs" />
   </ItemGroup>
-  <ItemGroup><None Include="source.extension.vsixmanifest"><SubType>Designer</SubType></None></ItemGroup>
   <ItemGroup>
-    <Reference Include="System" /><Reference Include="System.Design" /><Reference Include="System.Windows.Forms" /><Reference Include="System.IO.Compression.FileSystem" /><Reference Include="System.IO.Compression" /><Reference Include="EnvDTE80" /><Reference Include="EnvDTE" />
+    <Content Include="AI\Templates\Initialize.json" />
+    <Content Include="AI\Templates\Rehydrate.json" />
+    <Content Include="AI\Templates\Continue.json" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="source.extension.vsixmanifest"><SubType>Designer</SubType></None>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Design" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.IO.Compression.FileSystem" />
+    <Reference Include="System.IO.Compression" />
+    <Reference Include="EnvDTE80" />
+    <Reference Include="EnvDTE" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
@@ -66,5 +95,7 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(VSToolsPath)\VSSDK\Microsoft.VsSDK.targets" Condition="'$(VSToolsPath)' != ''" />
-  <ItemGroup><VSCTCompile Include="Contollo.Rdel.ZipRunner.vsct"><ResourceName>Menus.ctmenu</ResourceName></VSCTCompile></ItemGroup>
+  <ItemGroup>
+    <VSCTCompile Include="Contollo.Rdel.ZipRunner.vsct"><ResourceName>Menus.ctmenu</ResourceName></VSCTCompile>
+  </ItemGroup>
 </Project>

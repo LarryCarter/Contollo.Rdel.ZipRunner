@@ -1,0 +1,10 @@
+{
+  "Name": "Initialize",
+  "Providers": [
+    "Protocol",
+    "AIContract",
+    "Project",
+    "ProjectDocs",
+    "UserRequest"
+  ]
+}
