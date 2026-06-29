@@ -1,22 +1,13 @@
 # Contollo.Rdel.ZipRunner — AI Project Context
 
-## AI Session Settings UI
+## Missing ContextDocument Fix
 
-The extension now includes a Visual Studio settings dialog:
-
-```text
-Tools -> Contollo RDEL -> AI Session Settings
-```
-
-The dialog edits:
-
-- Initialize context level
-- Rehydrate context level
-- Continue context level
-- Context package output directory
-
-Settings are stored at:
+The project file referenced:
 
 ```text
-%LOCALAPPDATA%/Contollo/RDEL/ai-session-settings.json
+AI/Engine/ContextDocument.cs
 ```
+
+but the file was missing after the AI Session Settings UI update.
+
+This package restores that file so the Context Assembly Engine compiles.
