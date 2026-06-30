@@ -38,3 +38,31 @@ Remaining future UI work:
 - token estimate
 - selectable output panes
 - context snapshot generation from UI
+
+
+<!-- RDEL-DOCOPS-ID: 70B6B67F3095EDBA -->
+<!-- RDEL-DOCOPS-SOURCE: .rdel-docops/context/2026-06-29-ei.md -->
+<!-- RDEL-DOCOPS-UTC: 2026-06-30 01:40:30Z -->
+
+## 2026-06-29 — Engineering Intelligence Foundation
+
+RDEL now adds an Engineering Intelligence layer.
+
+Engineering Intelligence captures:
+
+- why a change happened
+- what failed
+- what was learned
+- what should be reused later
+- known gotchas
+- reusable patterns
+- file-specific engineering history
+
+This is separate from Git history. Git records what changed. Engineering Intelligence records why the decision was made.
+
+Storage root:
+
+```text
+docs/ei/
+```
+

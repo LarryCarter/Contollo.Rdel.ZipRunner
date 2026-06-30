@@ -33,3 +33,23 @@ Add `contollo-rdel.schema.json` and `tools/Validate-RdelPackage.ps1`.
 Reason:
 
 Malformed packages should be caught before apply. Preflight must be host-agnostic and runnable locally.
+
+
+<!-- RDEL-DOCOPS-ID: 33EF5B89AD1E1CED -->
+<!-- RDEL-DOCOPS-SOURCE: .rdel-docops/decisions/ADR-021-ei.md -->
+<!-- RDEL-DOCOPS-UTC: 2026-06-30 01:40:30Z -->
+
+## ADR-021 — Add Engineering Intelligence
+
+Decision:
+
+Add Engineering Intelligence as a first-class RDEL/NCS subsystem.
+
+Reason:
+
+Important engineering reasoning happens in AI chat but is difficult to recover later. Git commits record what changed, but not the full reasoning, rejected approaches, reusable lessons, or future warnings.
+
+Consequence:
+
+The repository now includes `docs/ei/` for decision memory, known gotchas, reusable patterns, and file-specific engineering history.
+
