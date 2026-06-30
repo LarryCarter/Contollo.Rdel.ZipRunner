@@ -359,3 +359,43 @@ The main missing items are:
 - knowledge graph integration
 - Engineering Intelligence search/query UI
 
+
+<!-- RDEL-DOCOPS-ID: 3D62180009E65567 -->
+<!-- RDEL-DOCOPS-SOURCE: .rdel-docops/context/2026-06-29-about-versioning.md -->
+<!-- RDEL-DOCOPS-UTC: 2026-06-30 02:15:55Z -->
+
+## 2026-06-29 — About and Versioning Added
+
+RDEL now has visible project identity and version status files.
+
+Added:
+
+```text
+docs/ABOUT-RDEL.md
+docs/VERSION.json
+docs/CHANGELOG.md
+docs/versioning/RDEL-VERSIONING.md
+```
+
+Current product version:
+
+```text
+0.3.0-preview
+```
+
+Current package/versioning stream:
+
+```text
+1.3.5-preview
+```
+
+Purpose:
+
+Future users and AI sessions should be able to quickly determine:
+
+- what this project is
+- what version/phase it is in
+- what features exist
+- what is missing
+- what package/versioning convention to use
+

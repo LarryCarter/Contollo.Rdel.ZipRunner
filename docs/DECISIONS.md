@@ -356,3 +356,22 @@ Consequence:
 
 The repository now includes `docs/ei/` for decision memory, known gotchas, reusable patterns, and file-specific engineering history.
 
+
+<!-- RDEL-DOCOPS-ID: 74410F681C2897AA -->
+<!-- RDEL-DOCOPS-SOURCE: .rdel-docops/decisions/ADR-023-about-versioning.md -->
+<!-- RDEL-DOCOPS-UTC: 2026-06-30 02:15:55Z -->
+
+## ADR-023 — Add visible About and Versioning files
+
+Decision:
+
+Add repository-level About, Version, Changelog, and Versioning guidance files.
+
+Reason:
+
+The project has grown through many RDEL packages, making it difficult for humans and AI sessions to quickly know the current baseline and version state.
+
+Consequence:
+
+Future packages should keep `docs/VERSION.json`, `docs/CHANGELOG.md`, and `docs/RDEL-PACKAGE-HISTORY.md` updated or appended as part of the package lifecycle.
+

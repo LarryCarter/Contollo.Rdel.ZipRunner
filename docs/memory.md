@@ -162,3 +162,36 @@ The next high-value work is:
 - add package inspection UI
 - add context preview/token estimate
 
+
+<!-- RDEL-DOCOPS-ID: A598A8CF8024E8C2 -->
+<!-- RDEL-DOCOPS-SOURCE: .rdel-docops/memory/2026-06-29-versioning-memory.md -->
+<!-- RDEL-DOCOPS-UTC: 2026-06-30 02:15:55Z -->
+
+## 2026-06-29 — Versioning Memory
+
+Stable rule:
+
+RDEL should maintain visible version state in:
+
+```text
+docs/VERSION.json
+docs/CHANGELOG.md
+docs/ABOUT-RDEL.md
+```
+
+Future package titles should include version numbers when useful.
+
+Current product baseline:
+
+```text
+0.3.0-preview
+```
+
+Current versioning phase:
+
+```text
+Phase 1.3 / AI Context Manager Foundation
+```
+
+Cumulative docs still must use DocOps.
+

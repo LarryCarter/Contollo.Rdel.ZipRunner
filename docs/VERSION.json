@@ -1,0 +1,44 @@
+{
+  "ProductName": "Contollo RDEL Zip Runner",
+  "ProtocolName": "Repository Delta Evolution Loop",
+  "ShortName": "RDEL",
+  "ProductVersion": "0.3.0-preview",
+  "PackageFormatVersion": "1.1-current-compatible",
+  "ManifestVersion": "1.2-preview",
+  "RdelSessionProtocolVersion": "1.2-preview",
+  "CurrentPhase": "Phase 1.3 / AI Context Manager Foundation",
+  "LatestKnownPackage": {
+    "Name": "RDEL About Versioning DocOps",
+    "PackageVersion": "1.3.5-preview"
+  },
+  "CurrentBaselineIncludes": [
+    "Core RDEL package runner",
+    "Dry run",
+    "Rollback",
+    "Git checkpointing",
+    "Run history",
+    "AI Session / RDEL Session Protocol",
+    "Context Assembly Engine",
+    "AI Session settings UI",
+    "Output window capture",
+    "Context package export",
+    "Schema and preflight tooling",
+    "DocOps append layer",
+    "Engineering Intelligence short-path store",
+    "Cumulative history recovery",
+    "Package history index"
+  ],
+  "KnownMissing": [
+    "Package identity enforcement",
+    "Compatibility checks",
+    "Dependency checks",
+    "Package inspection UI",
+    "Diff preview",
+    "Validation profile enforcement",
+    "VisualStudioMsBuild validation",
+    "Context preview window",
+    "Token estimator",
+    "Selectable output panes",
+    "Phase 2 context builder application"
+  ]
+}
