@@ -66,3 +66,296 @@ Storage root:
 docs/ei/
 ```
 
+
+<!-- RDEL-DOCOPS-ID: C192585E09BDF60D -->
+<!-- RDEL-DOCOPS-SOURCE: .rdel-docops/context/2026-06-29-history-recovery.md -->
+<!-- RDEL-DOCOPS-UTC: 2026-06-30 02:00:15Z -->
+
+## 2026-06-29 — Recovered RDEL Project History
+
+This entry recovers the major project history that was lost when earlier full-file RDEL packages overwrote the cumulative documentation files.
+
+### Product Direction
+
+The project began as `Contollo.Rdel.ZipRunner`, a Visual Studio 2022 extension for applying ZIP-based update packages. It evolved into **RDEL**: Repository Delta Evolution Loop.
+
+RDEL is no longer just a ZIP runner. It is the package/change engine for Neuro Commander Studio.
+
+### Neuro Commander Studio Direction
+
+Neuro Commander Studio is the broader AI development workbench.
+
+Its first practical client is the Visual Studio extension, but the long-term architecture includes:
+
+- Visual Studio
+- VS Code
+- JetBrains
+- browser extension
+- Office/Teams/internal apps
+- WebView provider workspaces
+- local context engine
+- approval workflow
+- AI context management
+- RDEL package apply/rollback/verification
+
+Version 1 intentionally supports AI websites and web/app interfaces before direct LLM APIs.
+
+### RDEL Core Engine History
+
+The core package engine established:
+
+- ZIP package selection
+- safe extraction with ZipSlip protection
+- solution root detection
+- selected project root detection
+- `contollo-rdel.json` manifest support
+- full-file apply mode
+- backup of overwritten files
+- validation commands
+- SHA-256 package hash
+- run history
+- Git checkpoints
+- post-apply commits
+- dry run
+- rollback
+
+### RDEL Package Philosophy
+
+A package should become a complete, portable, self-describing, verifiable unit of work that can safely move between developers, AI models, and environments.
+
+The package is not only code. It carries intent, validation, context, rollback expectations, package identity, and future trust information.
+
+### SourcePack Inheritance
+
+RDEL inherited key SourcePack principles:
+
+- deterministic state
+- checksums
+- status tracking
+- dependency chains
+- no-op protection
+- force/reset capability
+- ignore rules
+- deployment/run records
+- future signing
+
+The conceptual progression is:
+
+```text
+SourcePack = portable software state
+RDEL = portable change state
+RDEL Session Protocol / Context Bundle = portable AI session state
+Engineering Intelligence = reusable engineering experience
+```
+
+### AI Anti-Hallucination Protocol Inheritance
+
+RDEL also inherits the AI Anti-Hallucination Protocol principle:
+
+> AI must not merely suggest code. AI must account for code.
+
+That means AI-generated work must preserve:
+
+- exact file paths
+- file status
+- reason for change
+- relationship to existing files
+- assumptions
+- missing information
+- validation plan
+- rollback expectation
+
+If an AI cannot account for where a file lives, how it connects, and how it is validated, the output is not a valid RDEL package.
+
+### README vs Context
+
+A key decision was that root package `README.md` and AI context are different audiences:
+
+- root `README.md` is human/package metadata
+- `docs/context.md` is repo AI context
+- package root metadata is skipped by the runner
+- repo documentation updates must go through repository paths or DocOps
+
+### Validation Profiles
+
+Validation profiles were defined conceptually:
+
+- `GitOnly`
+- `DotNetCli`
+- `VisualStudioMsBuild`
+- `Custom`
+
+Current runner behavior still treats `Commands` as authoritative. ValidationProfile is documented but not fully enforced.
+
+For this VSIX project, plain `dotnet build` is not the correct validation path by default. Visual Studio Build menu or future `VisualStudioMsBuild` validation should be used.
+
+### VSIX Build Lesson
+
+This project is a Visual Studio extension. Some Visual Studio SDK dependencies resolve correctly inside Visual Studio/MSBuild but not through plain `dotnet build`.
+
+The project also had a serious `.csproj` corruption issue where `\v` could become a vertical-tab `0x0B`. The permanent rule is to preserve:
+
+```xml
+$(MSBuildExtensionsPath32)/Microsoft/VisualStudio/v$(VisualStudioVersion)
+```
+
+### GitHub Pages AI Access
+
+GitHub Pages was selected as a public AI-readable access layer for public-safe docs because normal GitHub pages can be difficult for some AI providers to fetch.
+
+Canonical public context URLs include:
+
+- `docs/context.md`
+- `docs/RDEL-AI-OPERATOR-GUIDE.md`
+- `docs/RDEL-AI-SPEC.md`
+
+### AI Session Manager / RSP
+
+The AI Session Manager evolved into the **RDEL Session Protocol (RSP)**.
+
+RSP is not merely a prompt. It is a session protocol rendered into clipboard text today and later into embedded chat messages, API payloads, or context packages.
+
+Session types:
+
+- Initialize
+- Rehydrate
+- Continue
+
+RSP includes:
+
+- Protocol
+- AI Contract
+- Failure Contract
+- Response Contract
+- Capability Matrix
+- Canonical Package Skeleton
+- Project pointers
+- Documentation references
+- Current task
+- Git/output context
+
+### Context Assembly Engine
+
+The Context Assembly Engine replaced hardcoded prompt building.
+
+The current architecture is:
+
+```text
+Context Assembly Engine
+  -> Providers
+  -> Templates
+  -> Renderer
+  -> Clipboard / Context Package / future embedded chat
+```
+
+Providers include project info, protocol, AI contract, failure contract, response contract, capability matrix, package skeleton, project docs, memory, decisions, active document, Git status, output context, and user request.
+
+### Context Levels
+
+Arbitrary truncation was replaced by configurable context levels:
+
+- Reference
+- Summary
+- Full
+
+This allows the same engine to support short daily continuation prompts, full first-session rehydration, and package exports for AI providers that cannot fetch the repository.
+
+### Settings UI
+
+A settings dialog was added for AI Session / RSP configuration:
+
+- Initialize context level
+- Rehydrate context level
+- Continue context level
+- Context package output directory
+
+### Output Capture
+
+Continue Session was improved to capture Visual Studio Output Window panes directly, reducing the need for manual copy/paste of build and RDEL output.
+
+### Context Store / Preflight
+
+A repo-local context store was added:
+
+```text
+docs/.rdel-context/
+```
+
+Along with:
+
+- `contollo-rdel.schema.json`
+- `tools/Validate-RdelPackage.ps1`
+- package checklist
+- docs-only package skeleton
+- code-change package skeleton
+
+### DocOps
+
+DocOps was added because cumulative Markdown files became too long and were accidentally overwritten by full-file AI packages.
+
+Future AI packages should not directly overwrite:
+
+```text
+docs/context.md
+docs/memory.md
+docs/DECISIONS.md
+```
+
+They should use:
+
+```text
+.rdel-docops/context/
+.rdel-docops/memory/
+.rdel-docops/decisions/
+```
+
+DocOps appends entries, backs up targets, and adds idempotent markers.
+
+### Engineering Intelligence
+
+Engineering Intelligence was added to preserve reasoning that Git cannot capture.
+
+Git records what changed.
+
+RDEL records the package and validation.
+
+Engineering Intelligence records why the change happened, what failed, what was learned, and how the lesson can be reused.
+
+The short-path storage root is:
+
+```text
+docs/ei/
+```
+
+### Current Known Good Baseline
+
+After the successful Engineering Intelligence Safe2 package, the current baseline includes:
+
+- RDEL core package runner
+- AI Session / RSP
+- Context Assembly Engine
+- settings UI
+- output capture
+- context package export
+- schema/preflight/tooling
+- DocOps append layer
+- Engineering Intelligence short-path store
+- first known gotcha: VSIX `.csproj` `VSToolsPath` backslash-v / `0x0B`
+
+### Still Missing
+
+The main missing items are:
+
+- package identity and compatibility enforcement
+- package dependency checks
+- package inspection UI
+- package diff preview
+- real validation profile enforcement
+- VisualStudioMsBuild validation
+- context preview window
+- token estimator
+- selectable output panes
+- Phase 2 context builder package application
+- knowledge graph integration
+- Engineering Intelligence search/query UI
+
