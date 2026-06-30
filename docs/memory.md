@@ -210,3 +210,24 @@ The About dialog is the first user-facing version/status surface.
 
 Future version updates should keep `docs/VERSION.json` current so the About dialog remains accurate.
 
+
+<!-- RDEL-DOCOPS-ID: F7F8E04DABE9A084 -->
+<!-- RDEL-DOCOPS-SOURCE: .rdel-docops/memory/2026-06-29-version-reconciliation-memory.md -->
+<!-- RDEL-DOCOPS-UTC: 2026-06-30 03:03:58Z -->
+
+## 2026-06-29 — Version State Reconciliation Memory
+
+Stable rule:
+
+After user-facing feature packages, update `docs/VERSION.json` so the About RDEL dialog reflects the real latest baseline.
+
+Current next recommended feature:
+
+```text
+RDEL 1.4.0 — Package Identity and Compatibility
+```
+
+Reason:
+
+Package identity and compatibility should be enforced before adding more package inspection, diff preview, or validation profile features.
+

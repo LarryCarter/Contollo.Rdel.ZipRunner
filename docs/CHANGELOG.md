@@ -1,5 +1,20 @@
 # RDEL Changelog
 
+## 0.3.1-preview — Version State Reconciliation
+
+### Added
+
+- Version state updated after the About RDEL menu package.
+- `docs/VERSION.json` now points to the latest applied feature package.
+- About documentation now includes the About RDEL Visual Studio menu item.
+- Next recommended feature is recorded as `RDEL 1.4.0 — Package Identity and Compatibility`.
+
+### Changed
+
+- Current baseline now includes:
+  - About/version repository files
+  - About RDEL Visual Studio menu item
+
 ## 0.3.0-preview — Current Baseline
 
 ### Added

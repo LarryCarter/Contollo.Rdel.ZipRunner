@@ -13,13 +13,25 @@ Repository Delta Evolution Loop
 ## Current Product Version
 
 ```text
-0.3.0-preview
+0.3.1-preview
 ```
 
 ## Current Phase
 
 ```text
 Phase 1.3 / AI Context Manager Foundation
+```
+
+## Latest Applied Feature Package
+
+```text
+RDEL 1.3.6 — About Menu Version UI
+```
+
+## Current Version State Package
+
+```text
+RDEL 1.3.7 — Version State Reconciliation
 ```
 
 ## What RDEL Is
@@ -58,6 +70,8 @@ The current baseline includes:
 - Engineering Intelligence
 - cumulative history recovery
 - package history index
+- About/version repository files
+- About RDEL Visual Studio menu item
 
 ## Current Limitations
 
@@ -70,6 +84,12 @@ The current baseline includes:
 - no diff preview yet
 - validation profiles are documented but not fully enforced
 - this VSIX project should not default to plain `dotnet build`
+
+## Next Recommended Feature
+
+```text
+RDEL 1.4.0 — Package Identity and Compatibility
+```
 
 ## Important Rule
 

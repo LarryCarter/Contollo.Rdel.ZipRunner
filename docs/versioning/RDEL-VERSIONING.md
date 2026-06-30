@@ -10,27 +10,27 @@ RDEL needs visible versioning so humans and AI can quickly understand the curren
 
 The overall Visual Studio extension / runner product version.
 
-Example:
+Current:
 
 ```text
-0.3.0-preview
+0.3.1-preview
 ```
 
 ### PackageVersion
 
 The version of an individual RDEL package.
 
-Example:
+Current version state package:
 
 ```text
-1.3.5-preview
+1.3.7-preview
 ```
 
 ### ManifestVersion
 
 The manifest structure version.
 
-Example:
+Current:
 
 ```text
 1.2-preview
@@ -40,7 +40,7 @@ Example:
 
 The compatible runner package structure version.
 
-Example:
+Current:
 
 ```text
 1.1-current-compatible
@@ -50,7 +50,7 @@ Example:
 
 The AI/session communication protocol version.
 
-Example:
+Current:
 
 ```text
 1.2-preview
@@ -61,9 +61,10 @@ Example:
 Going forward, package names should include a version when useful:
 
 ```text
-RDEL 1.3.5 — About Versioning DocOps
-RDEL 1.3.6 — Phase 2 Context Builder
-RDEL 1.4.0 — Package Identity Enforcement
+RDEL 1.3.7 — Version State Reconciliation
+RDEL 1.4.0 — Package Identity and Compatibility
+RDEL 1.4.1 — Package Inspection UI
+RDEL 1.4.2 — Validation Profiles / VisualStudioMsBuild
 ```
 
 The manifest `Name` should remain readable, but README titles and package docs should include version numbers.
@@ -82,7 +83,7 @@ Recommended product version movement:
 ```text
 0.1.x = core runner
 0.2.x = AI Session / context manager
-0.3.x = DocOps / Engineering Intelligence / history recovery
+0.3.x = DocOps / Engineering Intelligence / history recovery / about/versioning
 0.4.x = package identity and compatibility
 0.5.x = package inspection and diff preview
 ```

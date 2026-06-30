@@ -430,3 +430,45 @@ It displays:
 - Baseline features
 - Known missing features
 
+
+<!-- RDEL-DOCOPS-ID: 025994329286D77B -->
+<!-- RDEL-DOCOPS-SOURCE: .rdel-docops/context/2026-06-29-version-reconciliation.md -->
+<!-- RDEL-DOCOPS-UTC: 2026-06-30 03:03:58Z -->
+
+## 2026-06-29 — Version State Reconciled
+
+The repository-visible version state was reconciled after the About RDEL menu package.
+
+Updated files:
+
+```text
+docs/VERSION.json
+docs/ABOUT-RDEL.md
+docs/CHANGELOG.md
+docs/versioning/RDEL-VERSIONING.md
+```
+
+Current product version:
+
+```text
+0.3.1-preview
+```
+
+Latest applied feature package:
+
+```text
+RDEL 1.3.6 — About Menu Version UI
+```
+
+Current version-state package:
+
+```text
+RDEL 1.3.7 — Version State Reconciliation
+```
+
+Next recommended feature package:
+
+```text
+RDEL 1.4.0 — Package Identity and Compatibility
+```
+

@@ -398,3 +398,22 @@ Consequence:
 
 The extension reads `docs/VERSION.json` from the solution root when available and displays version/status information in a dialog.
 
+
+<!-- RDEL-DOCOPS-ID: C9165C0877C8D216 -->
+<!-- RDEL-DOCOPS-SOURCE: .rdel-docops/decisions/ADR-025-version-reconciliation.md -->
+<!-- RDEL-DOCOPS-UTC: 2026-06-30 03:03:58Z -->
+
+## ADR-025 — Reconcile version state after About menu
+
+Decision:
+
+Update `docs/VERSION.json`, `docs/ABOUT-RDEL.md`, `docs/CHANGELOG.md`, and versioning guidance after adding the About RDEL menu item.
+
+Reason:
+
+The About dialog reads `docs/VERSION.json`, so version state must be kept current after user-facing packages.
+
+Consequence:
+
+Future meaningful packages should update version state when they change the visible feature baseline.
+
