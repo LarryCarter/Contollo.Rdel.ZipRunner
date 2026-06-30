@@ -28,6 +28,7 @@ namespace Contollo.Rdel.ZipRunner
             await AiSessionContextCommand.InitializeAsync(this);
             await ExportAiContextPackageCommand.InitializeAsync(this);
             await AiSessionSettingsCommand.InitializeAsync(this);
+            await AboutRdelCommand.InitializeAsync(this);
         }
     }
 }

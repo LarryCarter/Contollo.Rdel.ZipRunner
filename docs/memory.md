@@ -195,3 +195,18 @@ Phase 1.3 / AI Context Manager Foundation
 
 Cumulative docs still must use DocOps.
 
+
+<!-- RDEL-DOCOPS-ID: 3AB5872713FE3411 -->
+<!-- RDEL-DOCOPS-SOURCE: .rdel-docops/memory/2026-06-29-about-menu-memory.md -->
+<!-- RDEL-DOCOPS-UTC: 2026-06-30 02:33:53Z -->
+
+## 2026-06-29 — About Menu Memory
+
+Stable rule:
+
+The Visual Studio extension should expose current project/version status from `docs/VERSION.json`.
+
+The About dialog is the first user-facing version/status surface.
+
+Future version updates should keep `docs/VERSION.json` current so the About dialog remains accurate.
+

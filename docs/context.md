@@ -399,3 +399,34 @@ Future users and AI sessions should be able to quickly determine:
 - what is missing
 - what package/versioning convention to use
 
+
+<!-- RDEL-DOCOPS-ID: C97A4A576982B3A4 -->
+<!-- RDEL-DOCOPS-SOURCE: .rdel-docops/context/2026-06-29-about-menu.md -->
+<!-- RDEL-DOCOPS-UTC: 2026-06-30 02:33:53Z -->
+
+## 2026-06-29 — About RDEL Menu Added
+
+The Visual Studio extension now includes:
+
+```text
+Tools -> Contollo RDEL -> About RDEL
+```
+
+The About dialog reads version information from:
+
+```text
+docs/VERSION.json
+```
+
+It displays:
+
+- Product name
+- Protocol name
+- Product version
+- Package format version
+- Manifest version
+- RDEL Session Protocol version
+- Current phase
+- Baseline features
+- Known missing features
+

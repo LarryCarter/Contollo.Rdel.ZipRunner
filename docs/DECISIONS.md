@@ -375,3 +375,26 @@ Consequence:
 
 Future packages should keep `docs/VERSION.json`, `docs/CHANGELOG.md`, and `docs/RDEL-PACKAGE-HISTORY.md` updated or appended as part of the package lifecycle.
 
+
+<!-- RDEL-DOCOPS-ID: 9516E9ED9B64F694 -->
+<!-- RDEL-DOCOPS-SOURCE: .rdel-docops/decisions/ADR-024-about-menu.md -->
+<!-- RDEL-DOCOPS-UTC: 2026-06-30 02:33:53Z -->
+
+## ADR-024 — Add About RDEL menu item
+
+Decision:
+
+Add a Visual Studio menu item:
+
+```text
+Tools -> Contollo RDEL -> About RDEL
+```
+
+Reason:
+
+The project now has visible version files, but users also need an in-application way to see the current product baseline and version.
+
+Consequence:
+
+The extension reads `docs/VERSION.json` from the solution root when available and displays version/status information in a dialog.
+
