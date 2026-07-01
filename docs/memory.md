@@ -231,3 +231,22 @@ Reason:
 
 Package identity and compatibility should be enforced before adding more package inspection, diff preview, or validation profile features.
 
+
+<!-- RDEL-DOCOPS-ID: E4626860F3BE3D18 -->
+<!-- RDEL-DOCOPS-SOURCE: .rdel-docops/memory/name.md -->
+<!-- RDEL-DOCOPS-UTC: 2026-07-01 04:36:03Z -->
+
+## 2026-06-30 — Package Naming Memory
+
+Stable rule:
+
+Future RDEL ZIP files must use:
+
+```text
+rdel-{version}-{project}-{description}.zip
+```
+
+Future AI sessions must include package identity and versioning in package titles and manifests.
+
+For existing projects, AI should first establish project context through README, directory tree, project files, output/errors, or future SourcePack/RDEL context-pack intake.
+

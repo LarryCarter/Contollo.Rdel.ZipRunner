@@ -472,3 +472,22 @@ Next recommended feature package:
 RDEL 1.4.0 — Package Identity and Compatibility
 ```
 
+
+<!-- RDEL-DOCOPS-ID: 0C1FD2FE47F51D65 -->
+<!-- RDEL-DOCOPS-SOURCE: .rdel-docops/context/name.md -->
+<!-- RDEL-DOCOPS-UTC: 2026-07-01 04:36:03Z -->
+
+## 2026-06-30 — Package Naming and Existing Project Intake
+
+RDEL now has a required package ZIP naming convention:
+
+```text
+rdel-{version}-{project}-{description}.zip
+```
+
+AI prompts and operator docs were updated so future AI-generated packages include the project name and version in the ZIP filename and package title.
+
+Existing-project intake guidance was also added. If an AI does not understand an existing project, it should request or generate project intake before producing a change package.
+
+SourcePack lessons were captured for future context-pack design.
+

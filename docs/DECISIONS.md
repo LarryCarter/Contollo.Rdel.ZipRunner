@@ -417,3 +417,30 @@ Consequence:
 
 Future meaningful packages should update version state when they change the visible feature baseline.
 
+
+<!-- RDEL-DOCOPS-ID: 735FAF234545199A -->
+<!-- RDEL-DOCOPS-SOURCE: .rdel-docops/decisions/ADR-027-name.md -->
+<!-- RDEL-DOCOPS-UTC: 2026-07-01 04:36:03Z -->
+
+## ADR-027 — Standardize RDEL ZIP naming and existing-project intake
+
+Decision:
+
+Standardize RDEL package ZIP names as:
+
+```text
+rdel-{version}-{project}-{description}.zip
+```
+
+Also require AI operator docs and prompt providers to tell AI providers this rule.
+
+Reason:
+
+Packages were becoming difficult to identify outside the immediate chat because filenames did not consistently include project and version.
+
+Existing projects also require context intake before AI can safely generate changes.
+
+Consequence:
+
+Future packages should be named, titled, and versioned consistently. Future RDEL work should add a single-file project intake/context-pack format inspired by SourcePack.
+

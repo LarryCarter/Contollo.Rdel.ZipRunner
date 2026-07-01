@@ -30,6 +30,27 @@
         "type": "string"
       }
     },
+    "PackageId": {
+      "type": "string"
+    },
+    "PackageVersion": {
+      "type": "string"
+    },
+    "Author": {
+      "type": "string"
+    },
+    "Company": {
+      "type": "string"
+    },
+    "Category": {
+      "type": "string"
+    },
+    "Tags": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
     "ValidationProfile": {
       "type": "string",
       "enum": [
@@ -38,6 +59,39 @@
         "VisualStudioMsBuild",
         "Custom"
       ]
+    },
+    "SchemaVersion": {
+      "type": "string"
+    },
+    "ManifestVersion": {
+      "type": "string"
+    },
+    "Compatibility": {
+      "type": "object",
+      "properties": {
+        "MinimumRunnerVersion": {
+          "type": "string"
+        },
+        "MaximumRunnerVersion": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "RequiresDocOps": {
+          "type": "boolean"
+        },
+        "RequiresGit": {
+          "type": "boolean"
+        },
+        "RequiresCapabilities": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "additionalProperties": true
     },
     "DocumentationOperations": {
       "type": "array",

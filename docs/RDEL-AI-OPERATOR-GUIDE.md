@@ -2,11 +2,9 @@
 
 ## Purpose
 
-This document tells an AI model exactly how to operate inside the RDEL workflow.
+This document tells an AI model how to operate inside the RDEL workflow.
 
-It is written for ChatGPT, Claude, Gemini, Copilot, local models, or any future AI that is asked to help with this repository.
-
-The AI should read this document before generating code or an RDEL package.
+It is written for ChatGPT, Claude, Gemini, Copilot, Grok, local models, and future AI providers.
 
 ## The Most Important Rule
 
@@ -16,41 +14,17 @@ Account for code.
 
 Every change must have:
 
-- a file path
-- a file status
-- a reason
-- a relationship to existing files
-- a validation plan
-- a rollback expectation
-- a context/documentation update when architecture changes
+- exact file path
+- file status
+- reason
+- relationship to existing files
+- validation plan
+- rollback expectation
+- documentation/context update when appropriate
 
-## What RDEL Is
+## Required Output
 
-RDEL means Repository Delta Evolution Loop.
-
-RDEL is a package-based workflow for AI-assisted software changes.
-
-The Visual Studio extension applies RDEL ZIP packages into a repository through a controlled process.
-
-## Current Runner Workflow
-
-The runner:
-
-1. Lets the developer select the ZIP package.
-2. Extracts it safely.
-3. Reads `contollo-rdel.json`.
-4. Computes the package SHA-256.
-5. Previews package metadata in the Output pane.
-6. Applies non-blocked files.
-7. Backs up overwritten files.
-8. Runs validation commands.
-9. Writes run history.
-10. Creates Git checkpoints and commits.
-11. Supports rollback of the last run.
-
-## What AI Should Produce
-
-The AI must produce a complete ZIP package, not loose suggestions.
+When asked to make repository changes, produce a complete RDEL ZIP package unless the user asks otherwise.
 
 Required package root files:
 
@@ -59,19 +33,48 @@ contollo-rdel.json
 README.md
 ```
 
-Recommended files when context changes:
+## Required ZIP Naming
+
+Every generated package ZIP must use:
 
 ```text
-docs/context.md
-docs/DECISIONS.md
-docs/memory.md
-docs/ai-instructions.md
-docs/RDEL-AI-SPEC.md
+rdel-{version}-{project}-{description}.zip
+```
+
+Example:
+
+```text
+rdel-1.4.1-contollo-rdel-ziprunner-package-naming-ai-docs.zip
+```
+
+Use lowercase kebab-case.
+
+Include the project name so the package can be identified outside the current chat.
+
+## Required Manifest Identity
+
+Every future package should include:
+
+```json
+{
+  "PackageId": "contollo.rdel.package-name",
+  "PackageVersion": "1.x.x-preview",
+  "Author": "Contollo",
+  "Company": "Contollo",
+  "Category": "Feature",
+  "Tags": ["rdel"],
+  "ManifestVersion": "1.3-preview",
+  "Compatibility": {
+    "MinimumRunnerVersion": "0.3.1-preview",
+    "RequiresDocOps": true,
+    "RequiresGit": true
+  }
+}
 ```
 
 ## Current Metadata Skip Rule
 
-The current runner skips package metadata files at package root:
+The runner skips package metadata files at package root:
 
 ```text
 contollo-rdel.json
@@ -79,21 +82,51 @@ contollo-rdel.txt
 README.md
 context.md
 manifest.json
+.rdel-docops/
 ```
 
-Therefore, package root `README.md` explains the package and is not applied to the repo.
+Therefore, root `README.md` explains the package and is not applied to the repo.
 
-Repository context should currently be placed at:
+## Cumulative Docs Rule
+
+Do not directly overwrite:
 
 ```text
 docs/context.md
+docs/memory.md
+docs/DECISIONS.md
 ```
 
-Future MetadataExport support may allow intentional publishing of root metadata.
+Use DocOps:
+
+```text
+.rdel-docops/context/
+.rdel-docops/memory/
+.rdel-docops/decisions/
+```
+
+## Existing Project Rule
+
+If the target project is existing and the AI does not already have context, ask for or generate project intake first.
+
+Minimum intake:
+
+```text
+README
+directory tree
+solution/project file
+important source files
+build/test commands
+current output/errors
+docs/context.md if present
+docs/VERSION.json if present
+```
+
+For AI tools that cannot reliably read ZIP files, prefer a single-file intake bundle such as a SourcePack-style `.spack` or future `.rdelctx`.
 
 ## File Status Rules
 
-When describing the package, the AI should list each file as:
+Use:
 
 ```text
 New
@@ -106,7 +139,7 @@ Current runner supports new and updated files.
 
 Current runner does not support delete operations.
 
-## Do Not Include Blocked or Dangerous Paths
+## Blocked Paths
 
 Never include:
 
@@ -133,18 +166,12 @@ Do not include secrets, credentials, production logs, customer data, tokens, cer
 
 The manifest must define validation through `Commands`.
 
-The current runner still executes `Commands` directly.
-
-`ValidationProfile` is documented but not yet first-class behavior.
-
 For documentation-only packages:
 
 ```json
 {
   "ValidationProfile": "GitOnly",
-  "Commands": [
-    "git status --porcelain"
-  ]
+  "Commands": ["git status --porcelain"]
 }
 ```
 
@@ -161,47 +188,37 @@ For normal SDK-style .NET projects:
 }
 ```
 
-For this VSIX repository, do not use `dotnet build` unless explicitly requested.
+For this VSIX repository, do not use plain `dotnet build` unless explicitly requested.
 
-## How AI Should Explain an RDEL Package
+## Package Explanation Format
 
-Before providing the ZIP, the AI should summarize:
+Before providing the ZIP, summarize:
 
 ```text
-Package name:
+Package:
+ZIP filename:
+PackageId:
+PackageVersion:
 Purpose:
 Validation:
 Files:
 - New:
 - Updated:
-- Not changed:
 Known risks:
 Rollback:
 ```
 
 ## AI Grounding Checklist
 
-Before finishing, the AI must verify:
+Before finishing, verify:
 
-- Are all referenced files included or already known to exist?
-- Are all new files placed at correct paths?
-- Are package metadata files not mistakenly expected to apply?
-- Is validation appropriate for the repo type?
-- Are docs/context updated when architecture changes?
-- Are blocked paths avoided?
-- Is the package deterministic?
-- Is the package README clear enough for a human?
-- Is `docs/context.md` updated enough for the next AI?
-
-## Failure Handling
-
-If the AI cannot know something, it must say so.
-
-Examples:
-
-```text
-I cannot verify the current file exists from the information provided.
-I am assuming the repo root is ...
-I am using GitOnly validation because this is a docs-only package.
-I am not deleting files because the current runner does not support delete operations.
-```
+- ZIP filename follows `rdel-{version}-{project}-{description}.zip`
+- Manifest includes identity/version fields
+- All referenced files are included or known to exist
+- New files use correct paths
+- Metadata files are not expected to apply
+- Cumulative docs use DocOps
+- Validation matches project type
+- Blocked paths are avoided
+- Package README is human-readable
+- The next AI session will understand the change

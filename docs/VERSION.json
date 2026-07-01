@@ -2,19 +2,14 @@
   "ProductName": "Contollo RDEL Zip Runner",
   "ProtocolName": "Repository Delta Evolution Loop",
   "ShortName": "RDEL",
-  "ProductVersion": "0.3.1-preview",
+  "ProductVersion": "0.4.1-preview",
   "PackageFormatVersion": "1.1-current-compatible",
-  "ManifestVersion": "1.2-preview",
+  "ManifestVersion": "1.3-preview",
   "RdelSessionProtocolVersion": "1.2-preview",
-  "CurrentPhase": "Phase 1.3 / AI Context Manager Foundation",
+  "CurrentPhase": "Phase 1.4 / Package Identity, Compatibility, and Package Naming",
   "LatestKnownPackage": {
-    "Name": "RDEL 1.3.6 \u2014 About Menu Version UI",
-    "PackageVersion": "1.3.6-preview",
-    "AppliedCommit": "dc22907d44f293aef63ca62160e187ae5d649ab1"
-  },
-  "VersionStatePackage": {
-    "Name": "RDEL 1.3.7 \u2014 Version State Reconciliation",
-    "PackageVersion": "1.3.7-preview"
+    "Name": "RDEL 1.4.1 \u2014 Package Naming and AI Documentation",
+    "PackageVersion": "1.4.1-preview"
   },
   "CurrentBaselineIncludes": [
     "Core RDEL package runner",
@@ -33,11 +28,15 @@
     "Cumulative history recovery",
     "Package history index",
     "About/version repository files",
-    "About RDEL Visual Studio menu item"
+    "About RDEL Visual Studio menu item",
+    "Package naming standard",
+    "AI operator package naming rules",
+    "Existing project intake guidance"
   ],
   "KnownMissing": [
-    "Package identity enforcement",
-    "Compatibility checks",
+    "Extraction path length fix",
+    "Single-file project intake/export format",
+    "SourcePack/RDEL context pack design",
     "Dependency checks",
     "Package inspection UI",
     "Diff preview",
@@ -48,8 +47,8 @@
     "Selectable output panes",
     "Phase 2 context builder application"
   ],
-  "NextRecommendedPackage": {
-    "Name": "RDEL 1.4.0 \u2014 Package Identity and Compatibility",
-    "Reason": "Package identity and compatibility enforcement should come before additional package inspection or diff preview features."
+  "PackageNaming": {
+    "ZipPattern": "rdel-{version}-{project}-{description}.zip",
+    "Example": "rdel-1.4.1-contollo-rdel-ziprunner-package-naming-ai-docs.zip"
   }
 }
