@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Shell.Interop;
 using SystemThreadingTasks = System.Threading.Tasks;
@@ -29,6 +29,12 @@ namespace Contollo.Rdel.ZipRunner
             pane.Activate();
 
             return new RdelOutputPane(pane);
+        }
+
+        public void Activate()
+        {
+            ThreadHelper.ThrowIfNotOnUIThread();
+            pane.Activate();
         }
 
         public void WriteLine(string message)

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.ComponentModel.Design;
 using System.IO;
 using System.Threading.Tasks;
@@ -57,7 +57,7 @@ namespace Contollo.Rdel.ZipRunner
             string solutionRoot = RdelSolutionLocator.GetSolutionRoot(dte);
             if (string.IsNullOrWhiteSpace(solutionRoot))
             {
-                await ShowMessageAsync("Open a solution first.");
+                await ShowMessageAsync(pane, "Open a solution first.");
                 return;
             }
 
@@ -65,6 +65,7 @@ namespace Contollo.Rdel.ZipRunner
             string packageName = Path.GetFileNameWithoutExtension(zipPath);
             string runId = DateTime.Now.ToString("yyyyMMdd-HHmmss") + "-" + RdelPath.SanitizeName(packageName);
             string runRoot = Path.Combine(solutionRoot, ".contollo", "rdel", "runs", runId);
+            string historyPath = Path.Combine(runRoot, "run-history.json");
 
             Directory.CreateDirectory(runRoot);
 
@@ -137,13 +138,21 @@ namespace Contollo.Rdel.ZipRunner
                 pane.WriteLine("RDEL apply complete. ApplySucceeded: " + record.ApplySucceeded);
                 pane.WriteLine("RDEL validation complete. ValidationSucceeded: " + record.ValidationSucceeded);
                 pane.WriteLine("RDEL overall success: " + record.Succeeded);
-                pane.WriteLine("History: " + Path.Combine(runRoot, "run-history.json"));
+                pane.WriteLine("History: " + historyPath);
 
                 string message = record.Succeeded
                     ? "RDEL run complete. Apply and validation succeeded."
-                    : "RDEL apply completed, but validation had issues. See Output and run history.";
+                    : "RDEL apply completed, but validation had issues.";
 
-                await ShowMessageAsync(message);
+                message += Environment.NewLine
+                    + Environment.NewLine
+                    + "Output pane: Contollo RDEL"
+                    + Environment.NewLine
+                    + "Run history:"
+                    + Environment.NewLine
+                    + historyPath;
+
+                await ShowMessageAsync(pane, message);
             }
             catch (Exception ex)
             {
@@ -157,8 +166,18 @@ namespace Contollo.Rdel.ZipRunner
 
                 pane.WriteLine("RDEL failed:");
                 pane.WriteLine(ex.ToString());
+                pane.WriteLine("History: " + historyPath);
 
-                await ShowMessageAsync("RDEL failed. See Visual Studio Output window.");
+                await ShowMessageAsync(
+                    pane,
+                    "RDEL failed."
+                    + Environment.NewLine
+                    + Environment.NewLine
+                    + "Output pane: Contollo RDEL"
+                    + Environment.NewLine
+                    + "Run history:"
+                    + Environment.NewLine
+                    + historyPath);
             }
         }
 
@@ -182,9 +201,14 @@ namespace Contollo.Rdel.ZipRunner
             }
         }
 
-        private async Task ShowMessageAsync(string message)
+        private async Task ShowMessageAsync(RdelOutputPane pane, string message)
         {
             await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
+
+            if (pane != null)
+            {
+                pane.Activate();
+            }
 
             VsShellUtilities.ShowMessageBox(
                 package,
@@ -193,6 +217,11 @@ namespace Contollo.Rdel.ZipRunner
                 OLEMSGICON.OLEMSGICON_INFO,
                 OLEMSGBUTTON.OLEMSGBUTTON_OK,
                 OLEMSGDEFBUTTON.OLEMSGDEFBUTTON_FIRST);
+
+            if (pane != null)
+            {
+                pane.Activate();
+            }
         }
     }
 }

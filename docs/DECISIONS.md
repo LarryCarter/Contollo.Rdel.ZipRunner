@@ -459,3 +459,18 @@ Reason:
 
 The user saw AI packages claim one thing but deliver comments, shims, or blank inherited classes instead of requested code changes.
 
+
+<!-- RDEL-DOCOPS-ID: 031B817348C80D21 -->
+<!-- RDEL-DOCOPS-SOURCE: .rdel-docops/decisions/a29.md -->
+<!-- RDEL-DOCOPS-UTC: 2026-07-01 05:10:06Z -->
+
+## ADR-029 — Preserve output visibility after RDEL dialogs
+
+Decision:
+
+RDEL completion and failure dialogs should include the run-history path and reactivate the Contollo RDEL Output pane.
+
+Reason:
+
+Users need to inspect validation and failure details immediately after clicking OK.
+

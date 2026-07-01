@@ -506,3 +506,14 @@ This failure confirmed the need for:
 - package diff inspection
 - claim-vs-change verification
 
+
+<!-- RDEL-DOCOPS-ID: C7D4DDE21F72D579 -->
+<!-- RDEL-DOCOPS-SOURCE: .rdel-docops/context/out.md -->
+<!-- RDEL-DOCOPS-UTC: 2026-07-01 05:10:06Z -->
+
+## 2026-06-30 — Output Preserve Dialog Fix
+
+RDEL completion/failure dialogs now include the run-history path and reactivate the Contollo RDEL Output pane before and after the modal dialog.
+
+This fixes the issue where clicking OK could make the RDEL output hard to inspect.
+

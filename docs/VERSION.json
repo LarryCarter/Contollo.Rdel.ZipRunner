@@ -2,14 +2,14 @@
   "ProductName": "Contollo RDEL Zip Runner",
   "ProtocolName": "Repository Delta Evolution Loop",
   "ShortName": "RDEL",
-  "ProductVersion": "0.4.2-preview",
+  "ProductVersion": "0.4.3-preview",
   "PackageFormatVersion": "1.1-current-compatible",
   "ManifestVersion": "1.3-preview",
   "RdelSessionProtocolVersion": "1.2-preview",
-  "CurrentPhase": "Phase 1.4 / Package Identity, Compatibility, Naming, and QA",
+  "CurrentPhase": "Phase 1.4 / Package Identity, Compatibility, Naming, QA, and Output Usability",
   "LatestKnownPackage": {
-    "Name": "RDEL 1.4.2 \u2014 Provider Fix",
-    "PackageVersion": "1.4.2-preview"
+    "Name": "RDEL 1.4.3 \u2014 Contollo.Rdel.ZipRunner \u2014 Output Preserve Dialog Fix",
+    "PackageVersion": "1.4.3-preview"
   },
   "KnownMissing": [
     "Extraction path length fix",

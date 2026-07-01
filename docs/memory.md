@@ -261,3 +261,14 @@ Generated C# must parse before packaging.
 
 Package diff/claim verification is now the next critical feature.
 
+
+<!-- RDEL-DOCOPS-ID: CE6117520BA40712 -->
+<!-- RDEL-DOCOPS-SOURCE: .rdel-docops/memory/out.md -->
+<!-- RDEL-DOCOPS-UTC: 2026-07-01 05:10:06Z -->
+
+## 2026-06-30 — Output Usability Memory
+
+Stable rule:
+
+If RDEL shows a modal completion/failure dialog, the dialog must include the run-history path and the extension should reactivate the Contollo RDEL Output pane afterward.
+
