@@ -444,3 +444,18 @@ Consequence:
 
 Future packages should be named, titled, and versioned consistently. Future RDEL work should add a single-file project intake/context-pack format inspired by SourcePack.
 
+
+<!-- RDEL-DOCOPS-ID: 5762B92172F5B91C -->
+<!-- RDEL-DOCOPS-SOURCE: .rdel-docops/decisions/a28.md -->
+<!-- RDEL-DOCOPS-UTC: 2026-07-01 04:53:00Z -->
+
+## ADR-028 — Add package diff and claim verification next
+
+Decision:
+
+Add package diff and claim verification next.
+
+Reason:
+
+The user saw AI packages claim one thing but deliver comments, shims, or blank inherited classes instead of requested code changes.
+

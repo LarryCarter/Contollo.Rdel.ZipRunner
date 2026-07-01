@@ -250,3 +250,14 @@ Future AI sessions must include package identity and versioning in package title
 
 For existing projects, AI should first establish project context through README, directory tree, project files, output/errors, or future SourcePack/RDEL context-pack intake.
 
+
+<!-- RDEL-DOCOPS-ID: 8B4210DF49190805 -->
+<!-- RDEL-DOCOPS-SOURCE: .rdel-docops/memory/f.md -->
+<!-- RDEL-DOCOPS-UTC: 2026-07-01 04:53:00Z -->
+
+## 2026-06-30 — Package QA Memory
+
+Generated C# must parse before packaging.
+
+Package diff/claim verification is now the next critical feature.
+

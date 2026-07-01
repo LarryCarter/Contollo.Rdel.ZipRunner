@@ -2,53 +2,18 @@
   "ProductName": "Contollo RDEL Zip Runner",
   "ProtocolName": "Repository Delta Evolution Loop",
   "ShortName": "RDEL",
-  "ProductVersion": "0.4.1-preview",
+  "ProductVersion": "0.4.2-preview",
   "PackageFormatVersion": "1.1-current-compatible",
   "ManifestVersion": "1.3-preview",
   "RdelSessionProtocolVersion": "1.2-preview",
-  "CurrentPhase": "Phase 1.4 / Package Identity, Compatibility, and Package Naming",
+  "CurrentPhase": "Phase 1.4 / Package Identity, Compatibility, Naming, and QA",
   "LatestKnownPackage": {
-    "Name": "RDEL 1.4.1 \u2014 Package Naming and AI Documentation",
-    "PackageVersion": "1.4.1-preview"
+    "Name": "RDEL 1.4.2 \u2014 Provider Fix",
+    "PackageVersion": "1.4.2-preview"
   },
-  "CurrentBaselineIncludes": [
-    "Core RDEL package runner",
-    "Dry run",
-    "Rollback",
-    "Git checkpointing",
-    "Run history",
-    "AI Session / RDEL Session Protocol",
-    "Context Assembly Engine",
-    "AI Session settings UI",
-    "Output window capture",
-    "Context package export",
-    "Schema and preflight tooling",
-    "DocOps append layer",
-    "Engineering Intelligence short-path store",
-    "Cumulative history recovery",
-    "Package history index",
-    "About/version repository files",
-    "About RDEL Visual Studio menu item",
-    "Package naming standard",
-    "AI operator package naming rules",
-    "Existing project intake guidance"
-  ],
   "KnownMissing": [
     "Extraction path length fix",
-    "Single-file project intake/export format",
-    "SourcePack/RDEL context pack design",
-    "Dependency checks",
-    "Package inspection UI",
-    "Diff preview",
-    "Validation profile enforcement",
-    "VisualStudioMsBuild validation",
-    "Context preview window",
-    "Token estimator",
-    "Selectable output panes",
-    "Phase 2 context builder application"
-  ],
-  "PackageNaming": {
-    "ZipPattern": "rdel-{version}-{project}-{description}.zip",
-    "Example": "rdel-1.4.1-contollo-rdel-ziprunner-package-naming-ai-docs.zip"
-  }
+    "Package diff/inspection before apply",
+    "Claim-vs-change verification"
+  ]
 }

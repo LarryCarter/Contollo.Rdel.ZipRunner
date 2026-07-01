@@ -491,3 +491,18 @@ Existing-project intake guidance was also added. If an AI does not understand an
 
 SourcePack lessons were captured for future context-pack design.
 
+
+<!-- RDEL-DOCOPS-ID: F8DBE0C823D4D5B0 -->
+<!-- RDEL-DOCOPS-SOURCE: .rdel-docops/context/f.md -->
+<!-- RDEL-DOCOPS-UTC: 2026-07-01 04:53:00Z -->
+
+## 2026-06-30 — Provider Fix
+
+Fixed `PackageSkeletonProvider.cs` C# string escaping.
+
+This failure confirmed the need for:
+
+- extraction path length fix
+- package diff inspection
+- claim-vs-change verification
+
